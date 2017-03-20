@@ -7,22 +7,18 @@ First of all we're creating groups. Pay attention to the values in quotes. They 
 group ospf
  router ospf '[0-9]'
   log adjacency changes
-  passive enable
   nsf ietf
   auto-cost reference-bandwidth 100000
   address-family ipv4 unicast
   area '0'
-   passive enable
    interface 'Loopback0'
     passive enable
    !
    interface 'Bundle-Ether.*'
     network point-to-point
-    passive disable
    !
    interface 'GigabitEthernet.*'
     network point-to-point
-    passive disable
    !
   !
  !
@@ -37,7 +33,7 @@ end-group
 group undrain
 end-group
 !
-group interface-phy
+group interfaces
  cdp
  lldp
  !
@@ -71,11 +67,12 @@ end-template
 Apply groups globally.
 
 ```
-apply-group interface-phy ospf undrain
+apply-group interfaces ospf undrain
 ```
 At this moment configuration inherits the instructions from three groups.
 
 ## Create alias
+This alias uses
 ```
 alias setbox (action) apply-group interface-phy ospf $action; apply-template $action (1)
 ```
