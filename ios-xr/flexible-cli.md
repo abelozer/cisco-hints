@@ -27,13 +27,16 @@ group ospf
   !
  !
 end-group
+!
 group drain
  router ospf '1'
   max-metric router-lsa
  !
 end-group
+!
 group undrain
 end-group
+!
 group interface-phy
  cdp
  lldp
@@ -49,7 +52,6 @@ end-group
 
 ## Create templates
 ```
-!
 template drain (as)
 !
 route-policy DRAIN-BGP
@@ -66,6 +68,7 @@ end-policy
 end-template
 ```
 ## Apply groups
+Apply groups globally.
 
 ```
 apply-group interface-phy ospf undrain
@@ -77,7 +80,7 @@ At this moment configuration inherits the instructions from three groups.
 alias setbox (action) apply-group interface-phy ospf $action; apply-template $action (1)
 ```
 ## Use alias
-Of course engineers should not do this with their hands. THis work is dedicated for scripts.
+Of course engineers should not do this with their hands. This work is dedicated for scripts.
 ```
 conf
 setbox (drain|undrain)
