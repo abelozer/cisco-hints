@@ -1,8 +1,8 @@
-# ASR9k Flexible CLI
-Flexible CLI uses groups and templates which can be applied to the configuration. The inherited group configuration is not shown with simple **show running-config** but there's a special keyword **inheritance**.
+# IOS XR Flexible CLI
+Flexible CLI uses groups and templates which can be applied to the configuration. The inherited group configuration is not shown with simple **show running-config** but there's a special keyword **inheritance**. If you also add **details** you'll see commented lines _#inherited from group_. This is not very common because you can't see configuration with a command you used to use. Flexible CLI helps to keep configuration standartised and this is a good reason to think about it at least.
 
 ## Create groups
-
+First of all we're creating groups. Pay attention to the values in quotes. They represent basic regular expressions for matching some numbers. OSPF process id or if-number.
 ```
 group ospf
  router ospf '[0-9]'
