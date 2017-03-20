@@ -72,7 +72,7 @@ apply-group interfaces ospf undrain
 At this moment configuration inherits the instructions from three groups.
 
 ## Create alias
-This alias uses one parameter _action_ for calling group & template name. For simplicity we call the identically.
+This alias uses one parameter _action_ for calling group & template name. For simplicity we call them identically.
 ```
 alias setbox (action) apply-group interfaces ospf $action; apply-template $action (1)
 ```
