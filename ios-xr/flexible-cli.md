@@ -76,6 +76,8 @@ This alias uses one parameter _action_ for calling group & template name. For si
 ```
 alias setbox (action) apply-group interfaces ospf $action; apply-template $action (1)
 ```
+> Apply-group rewrites itself. So if you want to add one group more you have to list all of them.
+
 ## Use alias
 Of course engineers should not do this with their hands. This work is dedicated for scripts.
 ```
