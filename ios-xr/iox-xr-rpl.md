@@ -7,13 +7,17 @@ route-policy RP-SET-LP($lp)
   set local-preference $lp
   pass
 ```
+
 And attach it to a neighbor with a value for $lp in brackets:
+
 ```
 router bgp 65535
  neighbor 198.51.100.2
   route-policy RP-SET-LP(300) in
 ```
+
 I little bit more complicated example with using prefix-sets.
+
 ```
 prefix-set PS-CUSTOMER-A
      203.0.113.0/24
@@ -28,3 +32,6 @@ router bgp 65535
  neighbor 198.51.100.2
   route-policy RP-PS-PASS(PS-CUSTOMER-A) in
 ```
+
+
+
