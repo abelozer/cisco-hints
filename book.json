@@ -5,7 +5,8 @@
     "myname_ru": "Алексей Белозеров"
   },
   "plugins": [
-    "styleguide"
+    "styleguide",
+    "localized-footer"
   ],
   "keywords": [
     "cisco",
