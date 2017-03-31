@@ -3,7 +3,7 @@ Flexible CLI uses groups and templates which can be applied to the configuration
 
 ## Create groups
 First of all we're creating groups. Pay attention to the values in quotes. They represent basic regular expressions for matching some numbers. OSPF process id or if-number.
-```
+```cisco
 group ospf
  router ospf '[0-9]'
   log adjacency changes
@@ -47,7 +47,7 @@ end-group
 ```
 
 ## Create templates
-```
+```cisco
 template drain (as)
 !
 route-policy DRAIN-BGP
@@ -66,22 +66,23 @@ end-template
 ## Apply groups
 Apply groups globally.
 
-```
+```cisco
 apply-group interfaces ospf undrain
 ```
 At this moment configuration inherits the instructions from three groups.
 
 ## Create alias
 This alias uses one parameter _action_ for calling group & template name. For simplicity we call them identically.
-```
+```cisco
 alias setbox (action) apply-group interfaces ospf $action; apply-template $action (1)
 ```
-
+{% styleguide %}
 <Icon id="alert" size="sm" /> Apply-group rewrites itself. So if you want to add one group more you have to list all of them.
+{% endstyleguide %}
 
 ## Use alias
 Of course engineers should not do this with their hands. This work is dedicated for scripts.
-```
+```cisco
 conf
 setbox (drain|undrain)
 commit
