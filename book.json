@@ -4,5 +4,5 @@
     "myname_en": "Alexey Belozerov",
     "myname_ru": "Алексей Белозеров"
   },
-  "plugins": ["gitbook-styleguide"]
+  "plugins": ["gitbook-plugin-styleguide"]
 }
