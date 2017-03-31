@@ -4,5 +4,12 @@
     "myname_en": "Alexey Belozerov",
     "myname_ru": "Алексей Белозеров"
   },
-  "plugins": ["styleguide"]
+  "plugins": [
+    "styleguide"
+  ],
+  "keywords": [
+    "cisco",
+    "ios",
+    "ios xr"
+  ]
 }
