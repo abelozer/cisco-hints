@@ -76,8 +76,7 @@ This alias uses one parameter _action_ for calling group & template name. For si
 ```
 alias setbox (action) apply-group interfaces ospf $action; apply-template $action (1)
 ```
-<
-Alert.Danger>
+<Alert.Danger>
 <Icon id="alert" size="sm" /> Apply-group rewrites itself. So if you want to add one group more you have to list all of them.
 </Alert.Danger>
 
