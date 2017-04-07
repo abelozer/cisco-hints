@@ -47,6 +47,7 @@ end-group
 ```
 
 ## Create templates
+Later we'll use these templates as well as groups for dynamic device configuration.
 ```cisco
 template drain (as)
 !
@@ -72,13 +73,13 @@ apply-group interfaces ospf undrain
 At this moment configuration inherits the instructions from three groups.
 
 ## Create alias
-You may ask why we need groups _drain_ and _undrain_. I'm going to show how we can use groups for dynamic device configuration. We'll need alias for this.
+You may ask why we need groups and templates called _drain_ and _undrain_. I'm going to show how we can use groups for dynamic device configuration. We'll need alias for this.
 
 This alias uses one parameter _action_ for calling group & template name. For simplicity we call them identically.
 ```cisco
 alias setbox (action) apply-group interfaces ospf $action; apply-template $action (1)
 ```
-> Apply-group rewrites itself. So if you want to add one group more you have to list all of them.
+> Apply-group rewrites itself. If you want to add one group more you have to list all of them.
 
 ## Use alias
 Of course engineers should not do this with their hands. This work is dedicated for scripts.
