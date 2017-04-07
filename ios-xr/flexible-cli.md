@@ -72,6 +72,8 @@ apply-group interfaces ospf undrain
 At this moment configuration inherits the instructions from three groups.
 
 ## Create alias
+You may ask why we need groups _drain_ and _undrain_. I'm going to show how we can use groups for dynamic device configuration. We'll need alias for this.
+
 This alias uses one parameter _action_ for calling group & template name. For simplicity we call them identically.
 ```cisco
 alias setbox (action) apply-group interfaces ospf $action; apply-template $action (1)
