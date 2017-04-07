@@ -17,7 +17,7 @@ router bgp 65535
   route-policy RP-SET-LP(300) in
 ```
 
-A little bit more complicated example with using prefix-sets.
+Example with using prefix-sets as parameter.
 
 ```cisco
 prefix-set PS-CUSTOMER-A
