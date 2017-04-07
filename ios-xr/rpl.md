@@ -17,7 +17,7 @@ router bgp 65535
   route-policy RP-SET-LP(300) in
 ```
 
-I little bit more complicated example with using prefix-sets.
+A little bit more complicated example with using prefix-sets.
 
 ```cisco
 prefix-set PS-CUSTOMER-A
@@ -34,6 +34,3 @@ router bgp 65535
  neighbor 198.51.100.2
   route-policy RP-PS-PASS(PS-CUSTOMER-A) in
 ```
-
-
-
