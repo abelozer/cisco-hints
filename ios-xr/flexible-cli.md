@@ -85,6 +85,7 @@ alias setbox (action) apply-group interfaces ospf $action; apply-template $actio
 Of course engineers should not do this with their hands. This work is dedicated for scripts.
 ```cisco
 conf
- setbox (drain|undrain)
+ setbox drain
+ setbox undrain
 commit
 ```
