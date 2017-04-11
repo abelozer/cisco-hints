@@ -4,5 +4,6 @@
 * [IOS XR](ios-xr/README.md)
   * [Flexible CLI](ios-xr/flexible-cli.md)
   * [RPL](ios-xr/rpl.md)
+  * [Object-group](ios-xr/object-group.md)
 * [IOS / IOS XE](ios/README.md)
 * [NX-OS](nx-os/README.md)
