@@ -3,7 +3,7 @@ There's nothing new with object-groups. It was implemented either in IOS and NX-
 
 This is convenient when you have to repeat some ACEs many times.
 
-> **Attention**: There's a known defect [CSCur28806](https://bst.cloudapps.cisco.com/bugsearch/bug/CSCur28806/). Host ACE in object-group matches _any_. As a workaround use /32 subnet entry. Also SMU is available for many releases. Current recommended IOS XR 5.3.4 has integrated fix.
+> **Warning** There's a known defect [CSCur28806](https://bst.cloudapps.cisco.com/bugsearch/bug/CSCur28806/). Host ACE in object-group matches _any_. As a workaround use /32 subnet entry. Also SMU is available for many releases. Current recommended IOS XR 5.3.4 has integrated fix.
 
 > **Note**: From Release 4.3.1, object group is only supported on ASR 9000 Enhanced Ethernet Line Card (aka Typhoon) and newer Tomahawk. Do not use object-groups on Trident LCs.
 
