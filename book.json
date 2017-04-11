@@ -7,7 +7,8 @@
   "plugins": [
     "styleguide",
     "richquotes",
-    "highlight"
+    "-highlight",
+    "code-highlighter"
   ],
   "keywords": [
     "cisco",
