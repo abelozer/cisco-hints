@@ -6,7 +6,8 @@
   },
   "plugins": [
     "styleguide",
-    "richquotes"
+    "richquotes",
+    "terminal"
   ],
   "keywords": [
     "cisco",
