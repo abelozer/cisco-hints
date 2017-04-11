@@ -1,3 +1,6 @@
+---
+description: ASR 9000 ACL with object-groups
+---
 # IOS XR object-groups
 There's nothing new with object-groups. It was implemented either in IOS and NX-OS. This is just a reminder that you can use it on IOS XR. ACE is represented by network and/or port object-groups, the super-set of ACE.
 
