@@ -42,3 +42,10 @@ In port object-group you can specify the ports equal to (*eq*), not equal (*neq*
 > **Note** You are not specifying transport protocol (TCP or UDP). This stays at ACE itself.
 
 Now you can use object-groups within ACLs prepended with keywords net-group or port-group.
+
+## Links
+1. [R6.0.x](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r6-0/addr-serv/configuration/guide/b-ipaddr-cg60xasr9k/b-ipaddr-cg60a9k_chapter_010.html#concept_BC3BE6FCEC6D4ED3804ED05DA84FC2FA)
+2. [R5.3.x](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r5-3/addr-serv/configuration/guide/b-ipaddr-cg53asr9k/b-ipaddr-cg53asr9k_chapter_010.html#concept_BC3BE6FCEC6D4ED3804ED05DA84FC2FA)
+3. [R5.2.x](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r5-2/addr-serv/configuration/guide/b-ipaddr-cg52a9k/b-ipaddr-cg52a9k_chapter_011.html#concept_BC3BE6FCEC6D4ED3804ED05DA84FC2FA)
+4. [R5.1.x](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r5-1/addr_serv/configuration/guide/b_ipaddr_cg51xa9k/b_ipaddr_cg51xa9k_chapter_010.html#concept_BC3BE6FCEC6D4ED3804ED05DA84FC2FA)
+5. [R4.3.x](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r4-3/addr_serv/configuration/guide/b_ipaddr_cg43xa9k/b_ipaddr_cg42a9k_chapter_01.html#concept_BC3BE6FCEC6D4ED3804ED05DA84FC2FA)
