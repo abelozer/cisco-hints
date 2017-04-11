@@ -88,7 +88,3 @@ conf
  setbox (drain|undrain)
 commit
 ```
-
-**[terminal conf]
- setbox (drain|undrain)
-commit
