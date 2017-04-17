@@ -23,7 +23,7 @@ Example with using prefix-sets as parameter.
 prefix-set PS-CUSTOMER-A
      203.0.113.0/24
 end-set
-!  
+!
 route-policy RP-PS-PASS($ps)
   if destination in $ps then
     pass
