@@ -1,6 +1,6 @@
 # Low disk0 space during upgrade
 
-If you are running low space on disk0 of RSP you will not be able to upgrade system. There are  at least three options to resolve this.
+If you are running low space on disk0 of RSP you will not be able to upgrade system. There are  at least four options to resolve this.
 
 ## Remove inactive packages
 
