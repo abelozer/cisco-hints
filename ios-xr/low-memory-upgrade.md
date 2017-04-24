@@ -1,6 +1,6 @@
 # Low disk0 space during upgrade
 
-If you are running low space on disk0 of RSP you will not be able to upgrade system. There are  at least four options to resolve this.
+If you are running low space on disk0 of RSP you will not be able to upgrade a system. There are at least four options to resolve this.
 
 ## Remove inactive packages
 
@@ -14,7 +14,7 @@ admin# install remove inactive
 
 ## Remove FPD pie
 
-System needs FPD pie only during first line card boot with new version to upgrace microcode. Later this package only consumes space.
+System needs the FPD pie only during first line card boot with new version to upgrace a microcode. Later this package only consumes space.
 
 ```cisco
 admin# install deactivate disk0:asr9k-fpd-px-4.3.4
