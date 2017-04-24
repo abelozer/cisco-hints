@@ -24,7 +24,7 @@ admin# install remove disk0:asr9k-fpd-px-4.3.4
 
 ## Flexible disk installs
 
-Starting 4.3.4 IOS XR supports [flexible disk installs](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r4-3/system_management/configuration/guide/b_sysman_cg43asr9k/b_sysman_cg43asr9k_chapter_0100.html#concept_4AD30BCA80FD484DAFCE08362851CC0D). It meens you can use disk1 as boot media. I would not recommend this approach on releases lower than 5.1.3 because of bug [CSCva62399](https://bst.cloudapps.cisco.com/bugsearch/bug/CSCva62399). System will still count free space on disk0 by mistake.
+Starting 4.3.4 IOS XR supports [flexible disk installs](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r4-3/system_management/configuration/guide/b_sysman_cg43asr9k/b_sysman_cg43asr9k_chapter_0100.html#concept_4AD30BCA80FD484DAFCE08362851CC0D). It meens you can use disk1 as boot media. I would not recommend this approach on releases lower than 5.1.3 because of bug [CSCva62399](https://bst.cloudapps.cisco.com/bugsearch/bug/CSCva62399). System will still count free space on disk0 by mistake. On 5.1.3 use SMU or Service Pack 10.
 
 ```cisco
 RP/0/RSP0/CPU0:asr9k#Error:    The install operation failed due to a system error.
