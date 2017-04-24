@@ -35,3 +35,7 @@ Error:    TECH SUPPORT:
 Error:     Please collect diagnostic information using '(admin) show tech-support install'
 Install operation 9 failed at 15:33:40 MSK Sun Apr 16 2017.
 ```
+
+## Turboboot
+
+Option of last resort is [turboboot](https://supportforums.cisco.com/document/123576/asr9000xr-understanding-turboboot-and-initial-system-bring).
