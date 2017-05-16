@@ -270,3 +270,7 @@ iosv-2#sh ip bgp | be Netw
 &&& *                    10.1.0.1                               0 1 1 1 ?
  *>  192.168.0.10/32  0.0.0.0                  0         32768 i
 ```
+
+## Links
+
+- [Implementing BGP](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r5-3/routing/configuration/guide/b_routing_cg53xasr9k/b_routing_cg53xasr9k_chapter_010.html)
