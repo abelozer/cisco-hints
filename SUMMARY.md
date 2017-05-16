@@ -6,5 +6,6 @@
   * [Route policy language](ios-xr/rpl.md)
   * [ACLs with object-groups](ios-xr/object-group.md)
   * [RSP disk0 low memory upgrade](ios-xr/low-memory-upgrade.md)
+  * [BGP Graceful Maintenance](ios-xr/bgp-graceful-maintenance.md)
 * [IOS / IOS XE](ios/README.md)
 * [NX-OS](nx-os/README.md)
