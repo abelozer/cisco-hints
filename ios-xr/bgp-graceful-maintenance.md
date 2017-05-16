@@ -5,7 +5,7 @@ Every time you do maintenance you start with moving traffic out of affected box.
 1. OSPF Stub router
 2. ISIS overload bit
 
-There are no techniques for EIGRP and BGP. We'll talk about [BGP Gracefull Mainenance](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r5-3/general/release/notes/reln-532a9k.html#concept_8267A3B6A4C745B78C6AF4D1C64E9DA1) intruduced in IOS XR 5.3.2.
+There are no gracefull techniques for EIGRP and BGP. You can shutdown BGP peers, yes. But we'll talk about [BGP Gracefull Mainenance](http://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r5-3/general/release/notes/reln-532a9k.html#concept_8267A3B6A4C745B78C6AF4D1C64E9DA1) intruduced in IOS XR 5.3.2.
 
 > **Quote** **BGP Graceful Maintenance**
 >
