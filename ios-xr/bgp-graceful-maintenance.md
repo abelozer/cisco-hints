@@ -13,11 +13,13 @@ There are no techniques for EIGRP and BGP. We'll talk about [BGP Gracefull Maine
 
 Let's configure this.
 
-## Initial configuration
+## Initial setup
 
 ![Topology](/img/bgp-gm.png)
 
-### iosv-1 — CE router
+### iosv-1 — CE router with OSPF as PE-CE
+
+iosv-1 and iosv-2 are CEs for vrf TEST. iosv-1 uses OSPF as PE-CE protocol.
 
 ```ios
 iosv-1#sh ip route ospf
@@ -26,6 +28,63 @@ iosv-1#sh ip route ospf
 O E2     192.168.0.10 [110/1] via 10.1.128.1, 00:13:33, GigabitEthernet0/1
 ```
 
-### iosxrv-1
+### iosv-2 — CE router with eBGP as PE-CE
 
-By default if you just enable BGP graceful maintenance BGP will set GSHUT community attribute to it's updates. If other routers do not interpret it there will not be any action taken by devices.
+iosv-2 uses eBGP as PE-CE protocol. The best path to iosv-1 Loopback address 192.168.0.9/32 is 10.1.0.1. This is the address of iosxrv-3.
+
+```ios
+iosv-2#sh ip bgp | b Netw
+     Network          Next Hop            Metric LocPrf Weight Path
+ *   10.1.128.0/30    10.1.0.5                               0 1 ?
+ *>                   10.1.0.1                               0 1 ?
+ *   192.168.0.9/32   10.1.0.5                               0 1 ?
+ *>                   10.1.0.1                               0 1 ?
+ *>  192.168.0.10/32  0.0.0.0                  0         32768 i
+```
+
+### iosxrv-1 — PE router
+
+```iosxr
+RP/0/0/CPU0:iosxrv-1#sh route vrf TEST
+...
+C    10.1.128.0/30 is directly connected, 00:21:35, GigabitEthernet0/0/0/0
+L    10.1.128.1/32 is directly connected, 00:21:35, GigabitEthernet0/0/0/0
+O    192.168.0.9/32 [110/2] via 10.1.128.2, 00:20:50, GigabitEthernet0/0/0/0
+B    192.168.0.10/32 [200/0] via 192.168.0.2 (nexthop in vrf default), 00:25:38
+```
+
+### iosxrv-3 — primary PE router
+
+iosxrv-3 — primary PE router. By default it sets local_preference to 200 for iosv-2 routes.
+
+```iosxr
+RP/0/0/CPU0:iosxrv-3#sh bgp vrf TEST | be Netw
+Tue May 16 08:33:24.457 UTC
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 1:1 (default for vrf TEST)
+*>i10.1.128.0/30      192.168.0.1              0    100      0 ?
+*>i192.168.0.9/32     192.168.0.1              2    100      0 ?
+*> 192.168.0.10/32    10.1.0.2                 0    200      0 100 i
+
+Processed 3 prefixes, 3 paths
+```
+### iosxrv-4 — backup PE router
+
+iosxrv-4 does not modify any BGP attributes. Because of high local_preference received from iosxrv-3 it uses 192.168.0.2 as a nexhop for iosv-2 Loopback address 192.168.0.10/32.
+
+```iosxr
+RP/0/0/CPU0:iosxrv-4#sh bgp vrf TEST | be Netw
+Tue May 16 08:34:21.034 UTC
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 1:1 (default for vrf TEST)
+*>i10.1.128.0/30      192.168.0.1              0    100      0 ?
+*>i192.168.0.9/32     192.168.0.1              2    100      0 ?
+*  192.168.0.10/32    10.1.0.6                 0             0 100 i
+*>i                   192.168.0.2              0    200      0 100 i
+
+Processed 3 prefixes, 4 paths
+```
+
+## Enabling BGP Gracefull Maintenance
+
+By default if you just enable BGP Graceful Maintenance BGP will set GSHUT community attribute to it's updates. If other routers do not interpret it there will not be any action taken by devices.
