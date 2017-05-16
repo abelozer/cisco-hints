@@ -88,3 +88,44 @@ Processed 3 prefixes, 4 paths
 ## Enabling BGP Gracefull Maintenance
 
 By default if you just enable BGP Graceful Maintenance BGP will set GSHUT community attribute to it's updates. If other routers do not interpret it there will not be any action taken by devices.
+
+### Enable BGP graceful maintenance on iosxrv-3
+
+```iosxr
+hostname iosxrv-3
+!
+router bgp 1
+ graceful-maintenance activate all-neighbors
+```
+
+We have a debug bgp updates on iosxrv-1:
+
+```iosxr
+RP/0/0/CPU0:May 16 08:41:58.722 : bgp[1052]: [default-rtr] (vpn4u): Received UPDATE from 192.168.0.2 with attributes:
+RP/0/0/CPU0:May 16 08:41:58.722 : bgp[1052]: [default-rtr] (vpn4u): nexthop 192.168.0.2/32, origin i, localpref 200, metric 0, path 100, community graceful-shutdown, extended community RT:1:1
+RP/0/0/CPU0:May 16 08:41:58.722 : bgp[1052]: [default-rtr] (vpn4u): Received prefix 2ASN:1:1:192.168.0.10/32 (path ID: none) with MPLS label 24004 from neighbor 192.168.0.2
+```
+
+We don't interpret GSHUT community on iosxrv-1. That's why nothing changed except GSHUT community itself.
+
+```iosxr
+RP/0/0/CPU0:iosxrv-1#sh bgp vrf TEST 192.168.0.10/32
+Tue May 16 08:45:23.128 UTC
+BGP routing table entry for 192.168.0.10/32, Route Distinguisher: 1:1
+Versions:
+  Process           bRIB/RIB  SendTblVer
+  Speaker                 45          45
+Last Modified: May 16 08:41:58.644 for 00:03:24
+Paths: (1 available, best #1)
+  Not advertised to any peer
+  Path #1: Received by speaker 0
+  Not advertised to any peer
+  100
+    192.168.0.2 (metric 2) from 192.168.0.2 (192.168.0.2)
+      Received Label 24004
+      Origin IGP, metric 0, localpref 200, valid, internal, best, group-best, import-candidate, imported
+      Received Path ID 0, Local Path ID 0, version 45
+&&&      Community: graceful-shutdown
+      Extended community: RT:1:1
+      Source AFI: VPNv4 Unicast, Source VRF: TEST, Source Route Distinguisher: 1:1
+```
