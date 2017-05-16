@@ -38,7 +38,7 @@ iosv-2#sh ip bgp | b Netw
  *   10.1.128.0/30    10.1.0.5                               0 1 ?
  *>                   10.1.0.1                               0 1 ?
  *   192.168.0.9/32   10.1.0.5                               0 1 ?
- *>                   10.1.0.1                               0 1 ?
+ &&&*>                   10.1.0.1                               0 1 ?
  *>  192.168.0.10/32  0.0.0.0                  0         32768 i
 ```
 
@@ -64,7 +64,7 @@ Tue May 16 08:33:24.457 UTC
 Route Distinguisher: 1:1 (default for vrf TEST)
 *>i10.1.128.0/30      192.168.0.1              0    100      0 ?
 *>i192.168.0.9/32     192.168.0.1              2    100      0 ?
-*> 192.168.0.10/32    10.1.0.2                 0    200      0 100 i
+&&&*> 192.168.0.10/32    10.1.0.2                 0    200      0 100 i
 
 Processed 3 prefixes, 3 paths
 ```
@@ -80,7 +80,7 @@ Route Distinguisher: 1:1 (default for vrf TEST)
 *>i10.1.128.0/30      192.168.0.1              0    100      0 ?
 *>i192.168.0.9/32     192.168.0.1              2    100      0 ?
 *  192.168.0.10/32    10.1.0.6                 0             0 100 i
-*>i                   192.168.0.2              0    200      0 100 i
+&&&*>i                   192.168.0.2              0    200      0 100 i
 
 Processed 3 prefixes, 4 paths
 ```
@@ -98,12 +98,12 @@ router bgp 1
  graceful-maintenance activate all-neighbors
 ```
 
-We have a debug bgp updates on iosxrv-1:
+iosxrv-3 re-announce then prefixes with GSHUT community. We have a corresponding debug bgp updates output from iosxrv-1:
 
 ```iosxr
-RP/0/0/CPU0:May 16 08:41:58.722 : bgp[1052]: [default-rtr] (vpn4u): Received UPDATE from 192.168.0.2 with attributes:
-RP/0/0/CPU0:May 16 08:41:58.722 : bgp[1052]: [default-rtr] (vpn4u): nexthop 192.168.0.2/32, origin i, localpref 200, metric 0, path 100, community graceful-shutdown, extended community RT:1:1
-RP/0/0/CPU0:May 16 08:41:58.722 : bgp[1052]: [default-rtr] (vpn4u): Received prefix 2ASN:1:1:192.168.0.10/32 (path ID: none) with MPLS label 24004 from neighbor 192.168.0.2
+bgp[1052]: [default-rtr] (vpn4u): Received UPDATE from 192.168.0.2 with attributes:
+bgp[1052]: [default-rtr] (vpn4u): nexthop 192.168.0.2/32, origin i, localpref 200, metric 0, path 100, community graceful-shutdown, extended community RT:1:1
+bgp[1052]: [default-rtr] (vpn4u): Received prefix 2ASN:1:1:192.168.0.10/32 (path ID: none) with MPLS label 24004 from neighbor 192.168.0.2
 ```
 
 We don't interpret GSHUT community on iosxrv-1. That's why nothing changed except GSHUT community itself.
@@ -128,4 +128,145 @@ Paths: (1 available, best #1)
 &&&      Community: graceful-shutdown
       Extended community: RT:1:1
       Source AFI: VPNv4 Unicast, Source VRF: TEST, Source Route Distinguisher: 1:1
+```
+
+If we just send GSHUT community we must interpret it. For example we could have used a policy like this:
+
+```iosxr
+route-policy gshut
+  if community matches-any gshut then
+    set local-preference 0
+  endif
+  pass
+end-policy
+```
+
+### Adjusting attributes
+
+We can change the attributes for re-announced routes. These changes are set per neighbor.
+
+```iosxr
+router bgp 1
+ neighbor 192.168.0.1
+  graceful-maintenance
+   local-preference 0
+   as-prepends 2
+  !
+ !
+!
+```
+
+Not very scalable untill you read [IOS XR Flexible CLI](flexible-cli.md) article. We'll use a group configuration to accomplish this task.
+
+```ioxr
+group BGP-GRACEFUL-MAINTENANCE
+ router bgp '[0-9]*'
+  neighbor '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*'
+   graceful-maintenance
+    local-preference 0
+   !
+  !
+  vrf '([^\s]+)'
+   neighbor '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*'
+    graceful-maintenance
+     as-prepends 2
+    !
+   !
+  !
+ !
+end-group
+```
+
+And then apply this group:
+
+```iosxr
+RP/0/0/CPU0:iosxrv-3(config)#apply-group BGP-GRACEFUL-MAINTENANCE
+RP/0/0/CPU0:iosxrv-3(config)#commit
+```
+
+Configuration for all neighbors changed:
+
+```iosxr
+RP/0/0/CPU0:iosxrv-3#sh run router bgp inheritance
+Tue May 16 09:03:21.224 UTC
+router bgp 1
+ graceful-maintenance activate all-neighbors
+ bgp router-id 192.168.0.2
+ address-family vpnv4 unicast
+ !
+ neighbor 192.168.0.1
+  remote-as 1
+&&&  graceful-maintenance
+&&&   local-preference 0
+  !
+  description iBGP peer iosxrv-1
+  update-source Loopback0
+  address-family vpnv4 unicast
+  !
+ !
+ neighbor 192.168.0.3
+  remote-as 1
+&&&  graceful-maintenance
+&&&   local-preference 0
+  !
+  update-source Loopback0
+  address-family vpnv4 unicast
+  !
+ !
+ vrf TEST
+  rd 1:1
+  address-family ipv4 unicast
+  !
+  neighbor 10.1.0.2
+   remote-as 100
+&&&   graceful-maintenance
+&&&    as-prepends 2
+   !
+   address-family ipv4 unicast
+    route-policy bgp_in in
+    route-policy bgp_out out
+   !
+  !
+ !
+```
+
+```iosxr
+bgp[1052]: [default-rtr] (vpn4u): Received UPDATE from 192.168.0.2 with attributes:
+bgp[1052]: [default-rtr] (vpn4u): nexthop 192.168.0.2/32, origin i, localpref 0, metric 0, path 100, community graceful-shutdown, extended community RT:1:1
+bgp[1052]: [default-rtr] (vpn4u): Received prefix 2ASN:1:1:192.168.0.10/32 (path ID: none) with MPLS label 24004 from neighbor 192.168.0.2
+```
+
+and
+
+```iosxr
+bgp[1052]: [default-rtr] (vpn4u): Received UPDATE from 192.168.0.3 with attributes:
+bgp[1052]: [default-rtr] (vpn4u): nexthop 192.168.0.3/32, origin i, localpref 100, metric 0, path 100, extended community RT:1:1
+bgp[1052]: [default-rtr] (vpn4u): Received prefix 2ASN:1:1:192.168.0.10/32 (path ID: none) with MPLS label 24003 from neighbor 192.168.0.3
+```
+
+Now new best path is choosen:
+
+```iosxr
+RP/0/0/CPU0:iosxrv-1#sh bgp vrf TEST | b Netw
+Tue May 16 09:09:05.871 UTC
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 1:1 (default for vrf TEST)
+*> 10.1.128.0/30      0.0.0.0                  0         32768 ?
+*> 192.168.0.9/32     10.1.128.2               2         32768 ?
+* i192.168.0.10/32    192.168.0.2              0      0      0 100 i
+&&&*>i                   192.168.0.3              0    100      0 100 i
+
+Processed 3 prefixes, 4 paths
+```
+
+But what happened to iosv-2, our CE router? No surprises. We see prepends and bestpath is changed.
+
+```ios
+iosv-2#sh ip bgp | be Netw
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>  10.1.128.0/30    10.1.0.5                               0 1 ?
+ *                    10.1.0.1                               0 1 1 1 ?
+&&& *>  192.168.0.9/32   10.1.0.5                               0 1 ?
+ *                    10.1.0.1                               0 1 1 1 ?
+ *>  192.168.0.10/32  0.0.0.0                  0         32768 i
 ```
