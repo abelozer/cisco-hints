@@ -14,7 +14,8 @@ And attach it to a neighbor with a value for $lp in brackets:
 ```cisco
 router bgp 65535
  neighbor 198.51.100.2
-  route-policy RP-SET-LP(300) in
+  address-family ipv4 unicast
+   route-policy RP-SET-LP(300) in
 ```
 
 Example with using prefix-sets as parameter.
@@ -32,5 +33,6 @@ end-policy
 !
 router bgp 65535
  neighbor 198.51.100.2
-  route-policy RP-PS-PASS(PS-CUSTOMER-A) in
+  address-family ipv4 unicast
+   route-policy RP-PS-PASS(PS-CUSTOMER-A) in
 ```
