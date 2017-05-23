@@ -42,7 +42,7 @@ Object-group members have no sequence numbers. And you cannot really edit a memb
 7.    commit
 ```
 
-In port object-group you can specify the ports equal to (*eq*), not equal (*neq*) less than (*lt*), or greater than (*gt*) the specified port number or protocol. Next option is port range. And last — not recommended nested object-group.
+In port object-group you can specify the ports equal to (*eq*), not equal (*neq*), less than (*lt*), or greater than (*gt*) the specified port number or protocol. Next option is port range. And last — not recommended nested object-group.
 
 > **Note** You are not specifying transport protocol (TCP or UDP). This stays at ACE itself.
 
