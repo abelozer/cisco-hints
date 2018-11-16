@@ -38,7 +38,7 @@ iosv-2#sh ip bgp | b Netw
  *   10.1.128.0/30    10.1.0.5                               0 1 ?
  *>                   10.1.0.1                               0 1 ?
  *   192.168.0.9/32   10.1.0.5                               0 1 ?
-&&& *>                   10.1.0.1                               0 1 ?
+ *>                   10.1.0.1                               0 1 ?
  *>  192.168.0.10/32  0.0.0.0                  0         32768 i
 ```
 
@@ -64,7 +64,7 @@ Tue May 16 08:33:24.457 UTC
 Route Distinguisher: 1:1 (default for vrf TEST)
 *>i10.1.128.0/30      192.168.0.1              0    100      0 ?
 *>i192.168.0.9/32     192.168.0.1              2    100      0 ?
-&&&*> 192.168.0.10/32    10.1.0.2                 0    200      0 100 i
+*> 192.168.0.10/32    10.1.0.2                 0    200      0 100 i
 
 Processed 3 prefixes, 3 paths
 ```
@@ -80,7 +80,7 @@ Route Distinguisher: 1:1 (default for vrf TEST)
 *>i10.1.128.0/30      192.168.0.1              0    100      0 ?
 *>i192.168.0.9/32     192.168.0.1              2    100      0 ?
 *  192.168.0.10/32    10.1.0.6                 0             0 100 i
-&&&*>i                   192.168.0.2              0    200      0 100 i
+*>i                   192.168.0.2              0    200      0 100 i
 
 Processed 3 prefixes, 4 paths
 ```
@@ -125,7 +125,7 @@ Paths: (1 available, best #1)
       Received Label 24004
       Origin IGP, metric 0, localpref 200, valid, internal, best, group-best, import-candidate, imported
       Received Path ID 0, Local Path ID 0, version 45
-&&&      Community: graceful-shutdown
+      Community: graceful-shutdown
       Extended community: RT:1:1
       Source AFI: VPNv4 Unicast, Source VRF: TEST, Source Route Distinguisher: 1:1
 ```
@@ -196,8 +196,8 @@ router bgp 1
  !
  neighbor 192.168.0.1
   remote-as 1
-&&&  graceful-maintenance
-&&&   local-preference 0
+  graceful-maintenance
+   local-preference 0
   !
   description iBGP peer iosxrv-1
   update-source Loopback0
@@ -206,8 +206,8 @@ router bgp 1
  !
  neighbor 192.168.0.3
   remote-as 1
-&&&  graceful-maintenance
-&&&   local-preference 0
+  graceful-maintenance
+   local-preference 0
   !
   update-source Loopback0
   address-family vpnv4 unicast
@@ -219,8 +219,8 @@ router bgp 1
   !
   neighbor 10.1.0.2
    remote-as 100
-&&&   graceful-maintenance
-&&&    as-prepends 2
+   graceful-maintenance
+    as-prepends 2
    !
    address-family ipv4 unicast
     route-policy bgp_in in
@@ -253,8 +253,8 @@ Tue May 16 09:09:05.871 UTC
 Route Distinguisher: 1:1 (default for vrf TEST)
 *> 10.1.128.0/30      0.0.0.0                  0         32768 ?
 *> 192.168.0.9/32     10.1.128.2               2         32768 ?
-&&&* i192.168.0.10/32    192.168.0.2              0      0      0 100 i
-&&&*>i                   192.168.0.3              0    100      0 100 i
+* i192.168.0.10/32    192.168.0.2              0      0      0 100 i
+*>i                   192.168.0.3              0    100      0 100 i
 
 Processed 3 prefixes, 4 paths
 ```
@@ -266,8 +266,8 @@ iosv-2#sh ip bgp | be Netw
      Network          Next Hop            Metric LocPrf Weight Path
  *>  10.1.128.0/30    10.1.0.5                               0 1 ?
  *                    10.1.0.1                               0 1 1 1 ?
-&&& *>  192.168.0.9/32   10.1.0.5                               0 1 ?
-&&& *                    10.1.0.1                               0 1 1 1 ?
+ *>  192.168.0.9/32   10.1.0.5                               0 1 ?
+ *                    10.1.0.1                               0 1 1 1 ?
  *>  192.168.0.10/32  0.0.0.0                  0         32768 i
 ```
 
