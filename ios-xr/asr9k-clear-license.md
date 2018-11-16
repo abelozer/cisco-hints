@@ -1,4 +1,4 @@
-# Clear all licenses in ASR9k
+# How to clear all licenses in ASR9k
 
 ## 1) Remove license_opid.puf from both RSP
 
@@ -44,5 +44,5 @@ Check the result and proceed with new licenses installation
 
     Local Chassis UDI Information:
     PID : ASR-9010
-    S/N : FOX1642GG58
+    S/N : {{ SOME_SERIAL_NUMBER }}
     Operation ID: 0
