@@ -1,5 +1,5 @@
 ---
-description: This section contains IOS XR topics.
+description: IOS XR related articles.
 ---
 
 # IOS XR

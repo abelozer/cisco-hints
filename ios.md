@@ -1,5 +1,5 @@
 ---
-description: This section contains IOS and IOS XE topics.
+description: IOS-XE related topics.
 ---
 
 # IOS / IOS XE
