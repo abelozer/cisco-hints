@@ -1,4 +1,4 @@
-# Summary
+# Table of contents
 
 * [Introduction](README.md)
 * [Interesting Facts](general/README.md)
@@ -10,6 +10,8 @@
   * [BGP Graceful Maintenance](ios-xr/bgp-graceful-maintenance.md)
   * [IGMP VRF override](ios-xr/asr9k-igmp-vrf-override.md)
   * [PW SPAN](ios-xr/asr9k-traffic-mirroring-pw-span.md)
-  * [ASR9k: how to remove licences completely](ios-xr/asr9k-clear-license.md)
-* [IOS / IOS XE](ios/README.md)
-* [NX-OS](nx-os/README.md)
+  * [ASR9k: How-to Remove Licences](ios-xr/asr9k-clear-license.md)
+* [IOS / IOS XE](ios.md)
+* [NX-OS](nx-os.md)
+* [Network Automation](network-automation.md)
+

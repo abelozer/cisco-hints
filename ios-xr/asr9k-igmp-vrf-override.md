@@ -1,14 +1,12 @@
-# IGMP VRF Override
+# IGMP VRF override
 
 ## Описание
 
-Функционал применим при следующем дизайне: ISP часто используют разные multicast и unicast топологии для сервиса IPTV. Например, одна PE обрабатывает запросы unicast в VRF (настройки и обновления для приставок, программа передач и т.д.), другая PE — IGMP и, соответственно, PIM в GRT.
+Функционал применим при следующем дизайне: ISP часто используют разные multicast и unicast топологии для сервиса IPTV. Например, одна PE обрабатывает запросы unicast в VRF \(настройки и обновления для приставок, программа передач и т.д.\), другая PE — IGMP и, соответственно, PIM в GRT.
 
 Функционал IGMP VRF Override позволяет на одном PE получать unicast запросы в VRF и транслировать IGMP запросы в GRT. PIM в топологии GRT добавляет интерфейсы VRF в IOL.
 
 > Функционал поддерживается с IOS XR 3.9.0.
-
-<!-- -->
 
 > Функционал не поддерживается на BVI.
 
@@ -16,7 +14,7 @@
 
 ### Настройка интерфейса в VRF
 
-```
+```text
 interface {{ MCAST_IFACE }}
  vrf {{ MCAST_VRF_NAME }}
  ipv4 address {{ IPADDR }} {{ SUBNETMASK }}
@@ -24,7 +22,7 @@ interface {{ MCAST_IFACE }}
 
 ### Настройка DHCP relay
 
-```
+```text
 dhcp ipv4
  profile {{ PROFILE_NAME }} relay
   broadcast-flag policy check
@@ -35,7 +33,7 @@ dhcp ipv4
 
 ### Настройка политики для IGMP VRF Override
 
-```
+```text
 route-policy {{ IGMP_VRF_OVERRIDE_POLICY_NAME }}
  set rpf-topology vrf default
 end-policy
@@ -43,7 +41,7 @@ end-policy
 
 ### Настройка PIM
 
-```
+```text
 router pim
  vrf {{ MCAST_VRF_NAME }}
   address-family ipv4
@@ -54,7 +52,7 @@ router pim
 
 ### Настройка multicast-routing
 
-```
+```text
 multicast-routing
  vrf {{ MCAST_VRF_NAME_NAME }}
   address-family ipv4
@@ -63,7 +61,7 @@ multicast-routing
 
 ## Проверка
 
-```
+```text
 RP/0/0/CPU0:x117#sh igmp vrf SMM_VOD groups
 IGMP Connected Group Membership
 Group Address Interface Uptime Expires Last Reporter
@@ -74,7 +72,7 @@ Group Address Interface Uptime Expires Last Reporter
 239.255.1.100 GigabitEthernet0/0/0/2.201 00:02:16 never 172.16.200.2
 ```
 
-```
+```text
 RP/0/0/CPU0:x117#sh pim vrf SMM_VOD topology
 IP PIM Multicast Topology Table
 ...
@@ -83,7 +81,7 @@ JP: Join(now) RPF VRF: default Flags: EX LH DSS
   GigabitEthernet0/0/0/2.201  00:01:53  fwd LI II LH
 ```
 
-```
+```text
 RP/0/0/CPU0:x117#sh pim topology 239.255.1.100 detail
 IP PIM Multicast Topology Table
 ...
@@ -99,7 +97,7 @@ RPF Table: IPv4-Unicast-default
    GigabitEthernet0/0/0/2.201  00:00:43  fwd LI II LH EX
 ```
 
-```
+```text
 RP/0/0/CPU0:x117#sh mrib route 239.255.1.100
 IP Multicast Routing Information Base
 Entry flags: L - Domain-Local Source, E - External Source to the Domain,
@@ -128,3 +126,4 @@ Interface flags: F - Forward, A - Accept, IC - Internal Copy,
 ## Ссылки
 
 [Настройка на IOS XR 5.3.4](https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k_r5-3/multicast/configuration/guide/b-mcast-cg53x-asr9k/b-mcast-cg53x-asr9k_chapter_0100.html#con_2896297)
+
