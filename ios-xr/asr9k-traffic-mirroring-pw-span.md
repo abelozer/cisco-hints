@@ -1,23 +1,23 @@
-# Настройка traffic mirroring на ASR 9000
+# PW SPAN
 
 ## Настройка local site
 
 Настройка узла, где находится источник..
+
 ### 1. Настраиваем monitor-session
 
-```
+```text
 monitor-session {{ MONITOR_SESSION_NAME }}
  destination pseudowire
 ```
 
-В качестве destination используется ключевое слово pseudowire.  Далее эта сессия применяется к attachment circuit и специальному PW для зеркалируемого трафика.
-
+В качестве destination используется ключевое слово pseudowire. Далее эта сессия применяется к attachment circuit и специальному PW для зеркалируемого трафика.
 
 ### 2. Настройка PW для зеркалируемого трафика
 
 Настраивается специальный PW, в который будет отправляться зеркалируемый трафик. В этом xconnect p2p нет attachment circuit.
 
-```
+```text
 l2vpn
  xconnect group {{ XC_GROUP_NAME }}
   p2p {{ P2P-NAME }}
@@ -29,7 +29,7 @@ l2vpn
 
 Команда добавляется на интерфейс, куда подключается сервис, который необходимо зеркалировать.
 
-```
+```text
 interface {{ UNI_IFACE }} l2transport
  monitor-session {{ MONITOR_SESSION_NAME }} [direction {rx-only | tx-only}]
 ```
@@ -42,7 +42,8 @@ interface {{ UNI_IFACE }} l2transport
 
 ## Проверка
 
-- show monitor-session [ session-name ] status
-- show monitor-session [ session-name ] status detail
-- show monitor-session [ session-name ] status error
-- show monitor-session counters
+* show monitor-session \[ session-name \] status
+* show monitor-session \[ session-name \] status detail
+* show monitor-session \[ session-name \] status error
+* show monitor-session counters
+

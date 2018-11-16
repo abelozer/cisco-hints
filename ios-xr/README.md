@@ -1,6 +1,8 @@
-# IOS XR
+---
+description: This section contains IOS XR topics.
+---
 
-What I love about IOS XR is that it hides a lot of secrets.
+# IOS XR
 
 * [Flexible CLI](flexible-cli.md)
 * [Route policy language](rpl.md)
@@ -9,3 +11,4 @@ What I love about IOS XR is that it hides a lot of secrets.
 * [IGMP VRF override](asr9k-igmp-vrf-override.md)
 * [PW SPAN](asr9k-traffic-mirroring-pw-span.md)
 * [ASR9k: how to remove licences completely](asr9k-clear-license.md)
+

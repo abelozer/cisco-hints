@@ -1,12 +1,12 @@
-# IOS XR Flexible CLI
+# Flexible CLI
 
-Flexible CLI uses groups and templates which can be applied to the configuration. The inherited group configuration is not shown with simple **show running-config** but there's a special keyword **inheritance**. If you also add **details** you'll see commented lines _#inherited from group_. This is not very common because you can't see configuration with a command you used to use. Flexible CLI helps to keep configuration standartised and this is a good reason to think about it at least.
+Flexible CLI uses groups and templates which can be applied to the configuration. The inherited group configuration is not shown with simple **show running-config** but there's a special keyword **inheritance**. If you also add **details** you'll see commented lines _\#inherited from group_. This is not very common because you can't see configuration with a command you used to use. Flexible CLI helps to keep configuration standartised and this is a good reason to think about it at least.
 
 ## Create groups
 
 First of all we're creating groups. Pay attention to the values in quotes. They represent basic regular expressions for matching some numbers. OSPF process id or if-number.
 
-```cisco
+```text
 group ospf
  router ospf '[0-9]'
   log adjacency changes
@@ -53,7 +53,7 @@ end-group
 
 Later we'll use these templates as well as groups for dynamic device configuration.
 
-```cisco
+```text
 template drain (as)
 !
 route-policy DRAIN-BGP
@@ -74,7 +74,7 @@ end-template
 
 Apply groups globally.
 
-```cisco
+```text
 apply-group interfaces ospf undrain
 ```
 
@@ -86,7 +86,7 @@ You may ask why we need groups and templates called _drain_ and _undrain_. I'm g
 
 This alias uses one parameter _action_ for calling group & template name. For simplicity we call them identically.
 
-```cisco
+```text
 alias setbox (action) apply-group interfaces ospf $action; apply-template $action (1)
 ```
 
@@ -96,8 +96,9 @@ alias setbox (action) apply-group interfaces ospf $action; apply-template $actio
 
 Of course engineers should not do this with their hands. This work is dedicated for scripts.
 
-```cisco
+```text
 conf
  setbox drain|undrain
 commit
 ```
+
