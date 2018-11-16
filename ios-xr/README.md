@@ -8,3 +8,4 @@ What I love about IOS XR is that it hides a lot of secrets.
 * [BGP Graceful Maintenance](bgp-graceful-maintenance.md)
 * [IGMP VRF override](asr9k-igmp-vrf-override.md)
 * [PW SPAN](asr9k-traffic-mirroring-pw-span.md)
+* [ASR9k: how to remove licences completely](asr9k-clear-license.md)
