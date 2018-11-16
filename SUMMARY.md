@@ -9,7 +9,7 @@
   * [RSP disk0 low memory upgrade](ios-xr/low-memory-upgrade.md)
   * [BGP Graceful Maintenance](ios-xr/bgp-graceful-maintenance.md)
   * [IGMP VRF override](ios-xr/asr9k-igmp-vrf-override.md)
-  * [PW SPAN](ios-xr/asr9k-traffic-mirroring-pw-span.md)
+  * [ASR9k: PW SPAN](ios-xr/asr9k-traffic-mirroring-pw-span.md)
   * [ASR9k: How-to Remove Licences](ios-xr/asr9k-clear-license.md)
 * [IOS / IOS XE](ios.md)
 * [NX-OS](nx-os.md)
