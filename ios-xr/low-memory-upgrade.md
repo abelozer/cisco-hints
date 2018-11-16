@@ -37,5 +37,5 @@ Install operation 9 failed at 15:33:40 MSK Sun Apr 16 2017.
 
 ## Turboboot
 
-Option of last resort is [turboboot](https://supportforums.cisco.com/document/123576/asr9000xr-understanding-turboboot-and-initial-system-bring).
+Option of last resort is a [turboboot](https://supportforums.cisco.com/document/123576/asr9000xr-understanding-turboboot-and-initial-system-bring).
 
