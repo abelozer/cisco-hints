@@ -14,14 +14,14 @@ Object-groups are convenient when you have to repeat some ACEs many times.
 ## Configuring network object-group
 
 ```cisco
-1.    configure
-2.    object-group network { ipv4 | ipv6 } object-group-name
-3.    description description
-4.    host address
-5.    address { mask | prefix }
-6.    range address address
-7.    object-group name
-8.    commit
+configure
+object-group network { ipv4 | ipv6 } object-group-name
+description description
+host address
+address { mask | prefix }
+range address address
+object-group name
+commit
 ```
 
 As you can see there are several options. You can specify single host, subnet or address range. Also you can use nested object-groups. But I do not recommend nesting.
@@ -33,13 +33,13 @@ Object-group members have no sequence numbers. And you cannot really edit a memb
 ## Configuring port object-group
 
 ```cisco
-1.    configure
-2.    object-group port object-group-name
-3.    description description
-4.    { eq | lt | gt }{ protocol | number }
-5.    range range range
-6.    object-group name
-7.    commit
+configure
+object-group port object-group-name
+description description
+{ eq | lt | gt }{ protocol | number }
+range range range
+object-group name
+commit
 ```
 
 In port object-group you can specify the ports equal to (*eq*), not equal (*neq*), less than (*lt*), or greater than (*gt*) the specified port number or protocol. Next option is port range. And last — not recommended nested object-group.
