@@ -1,10 +1,10 @@
 # Flexible CLI
 
 {% hint style="danger" %}
-All templates are provided as an example. You should verify them before applying.
+All templates are provided as an examples only. You should verify them before applying.
 {% endhint %}
 
-### Interfaces
+## Interfaces
 
 ```text
 group NNI-Main
@@ -40,7 +40,7 @@ group NNI-Main
 end-group
 ```
 
-### OSPF
+## OSPF
 
 Change network type to point-to-point to all OSPF interface in area 0
 
@@ -138,7 +138,7 @@ group OSPF-TI-LFA-PROCESS
 end-group
 ```
 
-### BGP
+## BGP
 
 Enable BGP Graceful Maintenance Mode for all BGP neighbours
 
@@ -169,7 +169,7 @@ group BGP-GRACEFUL-MAINTENANCE
 end-group
 ```
 
-### ISIS
+## ISIS
 
 Enable Segment Routing for ISIS Level-2
 
