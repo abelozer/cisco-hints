@@ -4,7 +4,7 @@
 
 Applet allows only `switchport trunk allowed vlan add|remove VLAN_ID`but denies `switchport trunk allowed vlan VLAN_ID` thus it can help you with this often mistake.
 
-```text
+```csharp
 event manager applet DENY-SWITCHPORT-TRUNK-ALLOWED-VLAN
  event cli pattern "switchport trunk allowed vlan [0-9]+" sync no skip yes
  action 1.0 puts "==> Command execution aborted. Add or remove keywords are required."
@@ -16,7 +16,7 @@ If there's another cli applet which uses `skip no` for the same command, then `s
 
 ## Action in interface shutdown example
 
-```text
+```csharp
 event manager applet monitorShutdown
  description “Monitors interface shutdown.”
  event cli match “conf t; interface *; shutdown”
@@ -26,7 +26,7 @@ event manager applet monitorShutdown
 
 ## Watch Loopback state
 
-```text
+```csharp
 event manager applet WatchLo0
  event syslog pattern "Interface Loopback0.* down" period 1
  action 2.0 cli command "enable"
@@ -38,7 +38,7 @@ event manager applet WatchLo0
 
 ## Catch CLI commands and log them
 
-```text
+```csharp
 event manager applet catchall
  event cli pattern ".*" sync no skip no
  action 1 syslog msg "$_cli_msg"

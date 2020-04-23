@@ -2,7 +2,7 @@
 
 ## Template
 
-```text
+```erlang
 platform platform vfi load-balance-label vlan {{ VLAN_ID }}
 ```
 

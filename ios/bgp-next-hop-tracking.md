@@ -4,7 +4,7 @@ By default IOS uses summary or default route to resolve next-hop. To prevent thi
 
 ## Template
 
-```text
+```erlang
 router bgp {{ ASN }}
  address-family ipv4
   bgp nexthop route-map {{ ROUTE_MAP_NAME }}

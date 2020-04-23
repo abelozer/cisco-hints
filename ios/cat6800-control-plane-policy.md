@@ -2,7 +2,7 @@
 
 ## ACLs
 
-```text
+```csharp
 ip access-list extended acl-copp-critical
  remark *** OSPF ***
  permit ospf any any
