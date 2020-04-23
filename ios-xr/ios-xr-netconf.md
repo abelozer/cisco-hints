@@ -1,5 +1,5 @@
 ---
-description: Generic netconf configuration for IOS XR.
+description: Netconf configuration template for IOS XR
 ---
 
 # Netconf Template
@@ -22,10 +22,13 @@ ssh timeout 120
 ## Example
 
 ```text
+ipv4 access-list ACL-NETCONF
+ 10 permit ipv4 host 192.168.1.1 any
+! 
 netconf-yang agent ssh
 !
 ssh server v2
-ssh server netconf vrf default
+ssh server netconf vrf default ipv4 access-list ACL-NETCONF
 ```
 
 ## Show commands
