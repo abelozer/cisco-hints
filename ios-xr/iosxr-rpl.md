@@ -1,4 +1,4 @@
-# IOS XR Route Policy Language
+# Route Policy Language
 
 IOS XR RPL is a powerful replacement of traditional IOS route-maps. One of its main advantages is parametrisation. Parametrisation helps keep configuration unified and prevents from cloning blocks. For example you can create a policy like this:
 

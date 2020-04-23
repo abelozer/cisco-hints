@@ -1,4 +1,4 @@
-# RSP disk0 low memory upgrade
+# ASR9k: Low memory upgrade
 
 If you are running low space on disk0 of RSP you will not be able to upgrade a system. There are at least four options to resolve this.
 
