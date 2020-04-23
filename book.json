@@ -7,8 +7,7 @@
   "plugins": [
     "styleguide",
     "richquotes",
-    "-highlight",
-    "prism-ext"
+    "highlight"
   ],
   "keywords": [
     "cisco",
