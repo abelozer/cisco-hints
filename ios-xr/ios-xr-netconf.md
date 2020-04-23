@@ -2,7 +2,7 @@
 description: Generic netconf configuration for IOS XR.
 ---
 
-# IOS XR Netconf
+# Netconf Template
 
 ## Template
 

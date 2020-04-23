@@ -1,5 +1,7 @@
 # Shared Policy Instance
 
+## Template
+
 ```text
 policy-map {{ POLICY_NAME }}
  class class-default

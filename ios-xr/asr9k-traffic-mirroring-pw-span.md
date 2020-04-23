@@ -2,7 +2,7 @@
 
 ## Настройка local site
 
-Настройка узла, где находится источник..
+Настройка узла, где находится источник.
 
 ### 1. Настраиваем monitor-session
 
@@ -42,8 +42,8 @@ interface {{ UNI_IFACE }} l2transport
 
 ## Проверка
 
-* show monitor-session \[ session-name \] status
-* show monitor-session \[ session-name \] status detail
-* show monitor-session \[ session-name \] status error
-* show monitor-session counters
+* `show monitor-session [ session-name ] status`
+* `show monitor-session [ session-name ] status detail`
+* `show monitor-session [ session-name ] status error`
+* `show monitor-session counters`
 

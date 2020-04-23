@@ -5,7 +5,7 @@ description: IOS XR related articles.
 # IOS XR
 
 * [Flexible CLI](flexible-cli.md)
-* [Route policy language](rpl.md)
+* [Route policy language](iosxr-rpl.md)
 * [RSP disk0 low memory upgrade](low-memory-upgrade.md)
 * [BGP Graceful Maintenance](bgp-graceful-maintenance.md)
 * [IGMP VRF override](asr9k-igmp-vrf-override.md)
