@@ -1,4 +1,8 @@
-# Device configuration templates
+---
+description: Section contains reusable configuration templates.
+---
+
+# Configuration Templates
 
 1. [ASR9k](asr9k)
 2. [NCS540](ncs540)

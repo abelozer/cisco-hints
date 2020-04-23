@@ -14,5 +14,4 @@
 * [IOS / IOS XE](ios.md)
 * [NX-OS](nx-os.md)
 * [Network Automation](network-automation.md)
-* [Configuration Templates](configuration-templates.md)
-
+* [Configuration Templates](templates/README.md)
