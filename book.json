@@ -8,7 +8,7 @@
     "styleguide",
     "richquotes",
     "-highlight",
-    "code-highlighter"
+    "prism"
   ],
   "keywords": [
     "cisco",
