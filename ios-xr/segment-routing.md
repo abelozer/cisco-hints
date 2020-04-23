@@ -1,11 +1,5 @@
 # Segment Routing
 
-Segment Routing is enabled with the following steps:
-
-1. MPLS forwarding is enabled on all interfaces where IS-IS is active.
-2. All known prefix-SIDs in the forwarding plain are programmed, with the prefix-SIDs advertised by remote routers or learned through local or remote mapping server.
-3. The prefix-SIDs locally configured are advertised.
-
 ### Jinja2 ISIS SR Template
 
 {% hint style="info" %}
@@ -21,7 +15,6 @@ segment-routing global-block {{ SRGB_START }} {{ SRGB_END }}
 {% endif %}
 router isis {{ ISIS_PROCESS | default("1") }}
  address-family ipv4 unicast
-{# TODO: verify metric-style command #}
   metric-style wide
   mpls traffic-eng {{ ISIS_LEVEL | default("level-2-only") }}
   mpls traffic-eng router-id {{ RID_IFACE | default("Loopback0") }}
