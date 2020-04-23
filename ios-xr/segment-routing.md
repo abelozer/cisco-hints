@@ -1,6 +1,10 @@
 # Segment Routing
 
-## ISIS
+Segment Routing is enabled with the following steps:
+
+1. MPLS forwarding is enabled on all interfaces where IS-IS is active.
+2. All known prefix-SIDs in the forwarding plain are programmed, with the prefix-SIDs advertised by remote routers or learned through local or remote mapping server.
+3. The prefix-SIDs locally configured are advertised.
 
 ### Jinja2 ISIS SR Template
 
@@ -8,7 +12,9 @@
 A default SRGB for IOS XR is 16000 – 23999.
 {% endhint %}
 
-```text
+{% tabs %}
+{% tab title="ISIS" %}
+```julia
 {% if SRGB_START and SRGB_END %}
 segment-routing global-block {{ SRGB_START }} {{ SRGB_END }}
 !
@@ -17,32 +23,16 @@ router isis {{ ISIS_PROCESS | default("1") }}
  address-family ipv4 unicast
 {# TODO: verify metric-style command #}
   metric-style wide
-{# Enables IGP traffic engineering functionality. #}
   mpls traffic-eng {{ ISIS_LEVEL | default("level-2-only") }}
-{# Sets the traffic engineering loopback interface. #}
   mpls traffic-eng router-id {{ RID_IFACE | default("Loopback0") }}
-{# Segment routing is enabled by the following actions:
-    * MPLS forwarding is enabled on all interfaces where IS-IS is active.
-    * All known prefix-SIDs in the forwarding plain are programmed, with the
-      prefix-SIDs advertised by remote routers or learned through local or
-      remote mapping server.
-    * The prefix-SIDs locally configured are advertised.
-#}
   segment-routing mpls
 {% if MICROLOOP_AVOIDANCE %}
-{# Enables Segment Routing Microloop Avoidance.
-   Need to be carefull because a point of local repair needs to set two labels.
-#}
   microloop avoidance segment-routing
 {% endif %}
 {% if MICROLOOP_AVOIDANCE_DELAY %}
-{# Specifies the amount of time the node uses the microloop avoidance policy
-before updating its forwarding table. The delay-time is in milliseconds. The
-range is from 1-60000. The default value is 5000. #}
   microloop avoidance rib-update-delay {{ MICROLOOP_AVOIDANCE_DELAY }}
 {% endif %}
 {% if MAPPING_SERVER %}
-{# Client is enabled by default from 6.1.1 #}
   segment-routing prefix-sid-map advertise-local
 {% endif %}
  !
@@ -59,26 +49,88 @@ range is from 1-60000. The default value is 5000. #}
 {%   endif %}
  !
 {% endfor %}
-{# Enables traffic engineering funtionality on the node. The node advertises
-the traffic engineering link attributes in IGP which populates the traffic
-engineering database (TED) on the head-end. The SR-TE head-end requires the
-TED to calculate and validate the path of the SR-TE policy. #}
 !
 mpls traffic-eng
 ```
+{% endtab %}
+
+{% tab title="OSPF" %}
+```julia
+{% if SRGB_START and SRGB_END %}
+segment-routing global-block {{ SRGB_START }} {{ SRGB_END }}
+!
+{% endif %}
+router ospf {{ OSPF_PROCESS | default("1") }}
+ segment-routing mpls
+{% if MAPPING_SERVER %}
+ segment-routing prefix-sid-map advertise-local
+{% endif %}
+{% if MICROLOOP_AVOIDANCE %}
+ microloop avoidance segment-routing
+{% endif %}
+{% if MICROLOOP_AVOIDANCE_DELAY %}
+ microloop avoidance rib-update-delay {{ MICROLOOP_AVOIDANCE_DELAY }}
+{% endif %}
+{% if TI_LFA_PROCESS %}
+ fast-reroute per-prefix
+ fast-reroute per-prefix ti-lfa
+{% endif %}
+ area 0
+ {% if TI_LFA_AREA0 %}
+  fast-reroute per-prefix
+  fast-reroute per-prefix ti-lfa
+ {% endif %}
+  mpls traffic-eng
+  !
+  interface {{ RID_IFACE | default("Loopback0") }}
+   prefix-sid index {{ INDEX }}
+  !
+{% for IFACE in NNI %}
+{%   if IFACE.TI_LFA %}
+  interface {{ IFACE.NAME }}
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+  !
+{%   endif %}
+{% endfor %}
+ !
+ mpls traffic-eng router-id {{ RID_IFACE | default("Loopback0") }}
+!
+mpls traffic-eng
+```
+{% endtab %}
+{% endtabs %}
 
 ### YANG Variables
 
+`MICROLOOP_AVOIDANCE_DELAY` specifies the amount of time the node uses the microloop avoidance policy before updating its forwarding table. The delay-time is in milliseconds. The range is from 1-60000. The default value is 5000.
+
+{% tabs %}
+{% tab title="ISIS" %}
 ```yaml
 ---
 ISIS_PROCESS: 'CORE'
 MICROLOOP_AVOIDANCE: True
+TI_LFA_PROCESS: True
 TI_LFA: True
 INDEX: 1
 NNI:
   - NAME: 'Te0/0/0/1'
   - NAME: 'Te0/0/0/2'
 ```
+{% endtab %}
+
+{% tab title="OSPF" %}
+```yaml
+---
+MICROLOOP_AVOIDANCE_DELAY: 5000
+```
+{% endtab %}
+{% endtabs %}
+
+### MPLS TE
+
+MPLS traffic engineering functionality is required on SR node. The node advertises the traffic engineering link attributes in IGP which populate the traffic engineering database \(TED\) on the head-end. The SR-TE head-end requires the TED to calculate and validate the path of the SR-TE policy.
 
 ## Links
 
