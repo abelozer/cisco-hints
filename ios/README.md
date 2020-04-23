@@ -1,8 +1,8 @@
 ---
-description: IOS-XE related topics.
+description: IOS-XE related topics
 ---
 
-# IOS / IOS XE
+# IOS / IOS-XE
 
 
 
