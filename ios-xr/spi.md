@@ -1,8 +1,8 @@
-# Shared Policy Instance
+# Shared Policy Instance Template
 
 ## Template
 
-```text
+```erlang
 policy-map {{ POLICY_NAME }}
  class class-default
   police rate 1000000 bps burst 8000 bytes

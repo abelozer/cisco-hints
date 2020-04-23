@@ -15,7 +15,7 @@ delete nvram:/license_opid.puf loc 0/RSP1/CPU0
 
 Remove license storage and licmgr temporary files from `disk0:` on both RSP
 
-```text
+```bash
 run attach 0/RSP0/CPU0
 cd /disk0:
 rm -R license

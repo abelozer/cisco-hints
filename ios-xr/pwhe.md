@@ -1,11 +1,14 @@
-# Pseudowire Headend
+# Pseudowire Headend Template
 
 ## Template
 
-```text
+{% hint style="info" %}
+Sub-interfaces are not allowed in GIL.
+{% endhint %}
+
+```erlang
 generic-interface-list {{ GENERIC_IFACE_LIST_NAME | default('CORE') }}
 {% for interface in item.nni %}
-{# sub-interfaces are not allowed in GIL #}
  interface {{ interface.name }}
 {% endfor %}
 !

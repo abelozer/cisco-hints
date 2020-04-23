@@ -6,7 +6,7 @@
 `static` keyword should be used for interoperability with Cisco 7600.
 {% endhint %}
 
-```text
+```erlang
 l2vpn
  load-balancing flow src-dst-ip
  !

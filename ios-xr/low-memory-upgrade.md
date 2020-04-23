@@ -6,7 +6,7 @@ If you are running low space on disk0 of RSP you will not be able to upgrade a s
 
 First of all you don't need inactive packages.
 
-```text
+```bash
 admin# show install inactive
 admin# install remove inactive
 ```
@@ -15,7 +15,7 @@ admin# install remove inactive
 
 System needs the FPD pie only during first line card boot with new version to upgrace a microcode. Later this package only consumes space.
 
-```text
+```bash
 admin# install deactivate disk0:asr9k-fpd-px-4.3.4
 admin# install commit
 admin# install remove disk0:asr9k-fpd-px-4.3.4

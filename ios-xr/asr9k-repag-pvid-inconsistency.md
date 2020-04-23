@@ -12,7 +12,7 @@
 
 Ниже приведены соответствующие настройки ASR9000.
 
-```text
+```coffeescript
 l2vpn
  bridge group bg1
   bridge-domain bd1
@@ -53,7 +53,7 @@ ethernet-services access-list ACL-BLOCK-BPDU
 
 Используемое регулярное выражение `.*Gig.*\..*` соответствует всем TenGigagitEthernet и GigabitEthernet L2 sub-интерфейсам.
 
-```text
+```csharp
 group BLOCK-BPDU
  interface '.*Gig.*\..*' l2transport
   ethernet-services access-group ACL-BLOCK-BPDU ingress
@@ -75,7 +75,7 @@ RP/0/RSP0/CPU0:ASR-LAB(config)#commit
 
 По умолчанию наследуемые команды не отображаются при выводе running-config. Для отображения необходимо использовать дополнительное ключевое слово `inheritance`.
 
-```text
+```coffeescript
 RP/0/RSP0/CPU0:ASR-LAB#sh run int Gig0/1/0/38.110 inheritance
 Tue Jun 27 10:39:23.728 MSK
 interface GigabitEthernet0/1/0/38.110 l2transport
@@ -87,7 +87,7 @@ interface GigabitEthernet0/1/0/38.110 l2transport
 
 При добавлении ключевого слово `detail` в выводе running-config добавляется название группы, от которой унаследована конфигурация.
 
-```text
+```coffeescript
 RP/0/RSP0/CPU0:ASR-LAB#sh run int Gig0/1/0/38.110 inheritance detail
 Tue Jun 27 10:41:55.697 MSK
 interface GigabitEthernet0/1/0/38.110 l2transport
@@ -122,7 +122,7 @@ Interface     Last TC               Reason                           Count
 Gi0/1/0/38    18:17:01 Jun 26 2017  Gi0/1/0/38.1 ingress TCN            18
 ```
 
-```text
+```coffeescript
 RP/0/RSP0/CPU0:ASR-LAB#show spanning-tree repag 1
 Tue Jun 27 10:54:07.568 MSK
 GigabitEthernet0/1/0/38.1

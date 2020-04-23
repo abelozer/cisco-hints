@@ -1,4 +1,4 @@
-# MPLS Label Allocation
+# MPLS Label Allocation Template
 
 By default IOS XR allocates labels for all subnets. This is a recommended to allocate labels for /32 only.
 

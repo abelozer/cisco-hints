@@ -8,7 +8,7 @@ description: Netconf configuration template for IOS XR
 
 {% tabs %}
 {% tab title="Cisco IOS XR" %}
-```text
+```erlang
 netconf-yang agent ssh
 !
 ssh server v2

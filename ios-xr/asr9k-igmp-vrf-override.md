@@ -18,7 +18,7 @@ IGMP VRF Override не поддерживается на интерфейсах 
 
 ### Настройка интерфейса в VRF
 
-```text
+```erlang
 interface {{ MCAST_IFACE }}
  vrf {{ MCAST_VRF_NAME }}
  ipv4 address {{ IPADDR }} {{ SUBNETMASK }}
@@ -26,7 +26,7 @@ interface {{ MCAST_IFACE }}
 
 ### Настройка DHCP relay
 
-```text
+```erlang
 dhcp ipv4
  profile {{ PROFILE_NAME }} relay
   broadcast-flag policy check
@@ -37,7 +37,7 @@ dhcp ipv4
 
 ### Настройка политики для IGMP VRF Override
 
-```text
+```erlang
 route-policy {{ IGMP_VRF_OVERRIDE_POLICY_NAME }}
  set rpf-topology vrf default
 end-policy
@@ -45,7 +45,7 @@ end-policy
 
 ### Настройка PIM
 
-```text
+```erlang
 router pim
  vrf {{ MCAST_VRF_NAME }}
   address-family ipv4
@@ -56,7 +56,7 @@ router pim
 
 ### Настройка multicast-routing
 
-```text
+```erlang
 multicast-routing
  vrf {{ MCAST_VRF_NAME_NAME }}
   address-family ipv4
@@ -65,7 +65,7 @@ multicast-routing
 
 ## Проверка
 
-```text
+```coffeescript
 RP/0/0/CPU0:x117#sh igmp vrf SMM_VOD groups
 IGMP Connected Group Membership
 Group Address Interface Uptime Expires Last Reporter
@@ -76,7 +76,7 @@ Group Address Interface Uptime Expires Last Reporter
 239.255.1.100 GigabitEthernet0/0/0/2.201 00:02:16 never 172.16.200.2
 ```
 
-```text
+```coffeescript
 RP/0/0/CPU0:x117#sh pim vrf SMM_VOD topology
 IP PIM Multicast Topology Table
 ...
@@ -85,7 +85,7 @@ JP: Join(now) RPF VRF: default Flags: EX LH DSS
   GigabitEthernet0/0/0/2.201  00:01:53  fwd LI II LH
 ```
 
-```text
+```coffeescript
 RP/0/0/CPU0:x117#sh pim topology 239.255.1.100 detail
 IP PIM Multicast Topology Table
 ...
@@ -101,7 +101,7 @@ RPF Table: IPv4-Unicast-default
    GigabitEthernet0/0/0/2.201  00:00:43  fwd LI II LH EX
 ```
 
-```text
+```coffeescript
 RP/0/0/CPU0:x117#sh mrib route 239.255.1.100
 IP Multicast Routing Information Base
 Entry flags: L - Domain-Local Source, E - External Source to the Domain,

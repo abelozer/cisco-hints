@@ -32,7 +32,7 @@ O E2     192.168.0.10 [110/1] via 10.1.128.1, 00:13:33, GigabitEthernet0/1
 
 iosv-2 uses eBGP as PE-CE protocol. The best path to iosv-1 Loopback address 192.168.0.9/32 is 10.1.0.1. This is the address of iosxrv-3.
 
-```text
+```coffeescript
 iosv-2#sh ip bgp | b Netw
      Network          Next Hop            Metric LocPrf Weight Path
  *   10.1.128.0/30    10.1.0.5                               0 1 ?
@@ -44,7 +44,7 @@ iosv-2#sh ip bgp | b Netw
 
 ### iosxrv-1 — PE router
 
-```text
+```coffeescript
 RP/0/0/CPU0:iosxrv-1#sh route vrf TEST
 ...
 C    10.1.128.0/30 is directly connected, 00:21:35, GigabitEthernet0/0/0/0
@@ -57,7 +57,7 @@ B    192.168.0.10/32 [200/0] via 192.168.0.2 (nexthop in vrf default), 00:25:38
 
 iosxrv-3 — primary PE router. By default it sets local\_preference to 200 for iosv-2 routes.
 
-```text
+```coffeescript
 RP/0/0/CPU0:iosxrv-3#sh bgp vrf TEST | be Netw
 Tue May 16 08:33:24.457 UTC
    Network            Next Hop            Metric LocPrf Weight Path
@@ -73,7 +73,7 @@ Processed 3 prefixes, 3 paths
 
 iosxrv-4 does not modify any BGP attributes. Because of high local\_preference received from iosxrv-3 it uses 192.168.0.2 as a nexhop for iosv-2 Loopback address 192.168.0.10/32.
 
-```text
+```coffeescript
 RP/0/0/CPU0:iosxrv-4#sh bgp vrf TEST | be Netw
 Tue May 16 08:34:21.034 UTC
    Network            Next Hop            Metric LocPrf Weight Path
@@ -109,7 +109,7 @@ bgp[1052]: [default-rtr] (vpn4u): Received prefix 2ASN:1:1:192.168.0.10/32 (path
 
 We don't interpret GSHUT community on iosxrv-1. That's why nothing changed except GSHUT community itself.
 
-```text
+```coffeescript
 RP/0/0/CPU0:iosxrv-1#sh bgp vrf TEST 192.168.0.10/32
 Tue May 16 08:45:23.128 UTC
 BGP routing table entry for 192.168.0.10/32, Route Distinguisher: 1:1
@@ -159,7 +159,7 @@ router bgp 1
 
 Not very scalable untill you read [IOS XR Flexible CLI](flexible-cli.md) article. We'll use a group configuration to accomplish this task.
 
-```text
+```c
 group BGP-GRACEFUL-MAINTENANCE
  router bgp '[0-9]*'
   neighbor '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*'
@@ -247,7 +247,7 @@ bgp[1052]: [default-rtr] (vpn4u): Received prefix 2ASN:1:1:192.168.0.10/32 (path
 
 Now new best path is chosen:
 
-```text
+```coffeescript
 RP/0/0/CPU0:iosxrv-1#sh bgp vrf TEST | b Netw
 Tue May 16 09:09:05.871 UTC
    Network            Next Hop            Metric LocPrf Weight Path
@@ -262,7 +262,7 @@ Processed 3 prefixes, 4 paths
 
 But what happened to iosv-2, our CE router? No surprises. We see prepends and bestpath is changed.
 
-```text
+```coffeescript
 iosv-2#sh ip bgp | be Netw
      Network          Next Hop            Metric LocPrf Weight Path
  *>  10.1.128.0/30    10.1.0.5                               0 1 ?

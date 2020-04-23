@@ -6,7 +6,7 @@
 
 ### 1. Настраиваем monitor-session
 
-```text
+```erlang
 monitor-session {{ MONITOR_SESSION_NAME }}
  destination pseudowire
 ```
@@ -17,10 +17,10 @@ monitor-session {{ MONITOR_SESSION_NAME }}
 
 Настраивается специальный PW, в который будет отправляться зеркалируемый трафик. В этом xconnect p2p нет attachment circuit.
 
-```text
+```erlang
 l2vpn
  xconnect group {{ XC_GROUP_NAME }}
-  p2p {{ P2P-NAME }}
+  p2p {{ P2P_NAME }}
    monitor-session {{ MONITOR_SESSION_NAME }}
    neighbor ipv4 {{ NEIGHBOR_ADDRESS }} pw-id {{ PW_ID }}
 ```
@@ -29,7 +29,7 @@ l2vpn
 
 Команда добавляется на интерфейс, куда подключается сервис, который необходимо зеркалировать.
 
-```text
+```erlang
 interface {{ UNI_IFACE }} l2transport
  monitor-session {{ MONITOR_SESSION_NAME }} [direction {rx-only | tx-only}]
 ```

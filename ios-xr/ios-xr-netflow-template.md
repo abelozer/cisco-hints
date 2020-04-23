@@ -1,6 +1,12 @@
 # IOS XR Netflow Template
 
-```java
+## Template
+
+{% hint style="info" %}
+Some platforms do not support egress netflow.
+{% endhint %}
+
+```erlang
 flow exporter-map {{ NF_EXPORTER_MAP_NAME }}
  version v9
  transport udp {{ NF_DST_PORT }}

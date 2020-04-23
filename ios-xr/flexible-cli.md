@@ -1,3 +1,7 @@
+---
+description: Example of configuration groups which can be inherited by configuration items
+---
+
 # Flexible CLI
 
 {% hint style="danger" %}
@@ -10,7 +14,7 @@ Flexible CLI uses groups and templates which can be applied to the configuration
 
 First of all we're creating groups. Pay attention to the values in quotes. They represent basic regular expressions for matching some numbers. OSPF process id or if-number.
 
-```text
+```csharp
 group ospf
  router ospf '[0-9]'
   log adjacency changes
@@ -57,7 +61,7 @@ end-group
 
 Later we'll use these templates as well as groups for dynamic device configuration.
 
-```text
+```bash
 template drain (as)
 !
 route-policy DRAIN-BGP
@@ -112,7 +116,7 @@ commit
 
 ### Interfaces
 
-```text
+```csharp
 group NNI-Main
  interface 'Gi.*'
   ipv4 unreachables disable
@@ -150,7 +154,7 @@ end-group
 
 Change network type to point-to-point to all OSPF interface in area 0
 
-```text
+```csharp
 group OSPF-P2P
  router ospf '.*'
   area '0.*'
@@ -170,7 +174,7 @@ end-group
 
 Set max-metric
 
-```text
+```csharp
 group MAX-METRIC-OSPF
  router ospf '.*'
   max-metric router-lsa
@@ -183,7 +187,7 @@ end-group
 
 Enable Segment Routing for OSPF
 
-```text
+```csharp
 group SR-OSPF-AREA0
  mpls traffic-eng
  !
@@ -199,7 +203,7 @@ end-group
 
 Enable TI-LFA for all OSPF interface in Area 0
 
-```text
+```csharp
 group OSPF-TI-LFA-AREA0
  router ospf '.*'
   area '0.*'
@@ -212,7 +216,7 @@ end-group
 
 Enable TI-LFA for OSPF per interface
 
-```text
+```csharp
 group OSPF-TI-LFA-PER-INTERFACE
  router ospf '.*'
   area '0.*'
@@ -235,7 +239,7 @@ end-group
 
 Enable TI-LFA for OSPF process
 
-```text
+```csharp
 group OSPF-TI-LFA-PROCESS
  router ospf '.*'
   fast-reroute per-prefix
@@ -248,7 +252,7 @@ end-group
 
 Enable BGP Graceful Maintenance Mode for all BGP neighbours
 
-```text
+```csharp
 group BGP-GRACEFUL-MAINTENANCE
  router bgp '[0-9]*'
   neighbor-group '([^\s]+)'
@@ -279,7 +283,7 @@ end-group
 
 Enable Segment Routing for ISIS Level-2
 
-```text
+```csharp
 group SR-ISIS-LEVEL-2-ONLY
  router isis '.*'
   address-family ipv4 unicast
@@ -296,7 +300,7 @@ end-group
 
 Enable ISIS TI-LFA
 
-```text
+```csharp
 group ISIS-TI-LFA
  router isis '.*'
   interface 'GigabitEthernet.*'

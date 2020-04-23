@@ -1,4 +1,4 @@
-# Segment Routing
+# Segment Routing Template
 
 ### Jinja2 ISIS SR Template
 
@@ -8,7 +8,7 @@ A default SRGB for IOS XR is 16000 – 23999.
 
 {% tabs %}
 {% tab title="ISIS" %}
-```julia
+```erlang
 {% if SRGB_START and SRGB_END %}
 segment-routing global-block {{ SRGB_START }} {{ SRGB_END }}
 !
@@ -48,7 +48,7 @@ mpls traffic-eng
 {% endtab %}
 
 {% tab title="OSPF" %}
-```julia
+```erlang
 {% if SRGB_START and SRGB_END %}
 segment-routing global-block {{ SRGB_START }} {{ SRGB_END }}
 !
@@ -94,16 +94,15 @@ mpls traffic-eng
 {% endtab %}
 {% endtabs %}
 
-### YANG Variables
+### Sample Variables
 
 `MICROLOOP_AVOIDANCE_DELAY` specifies the amount of time the node uses the microloop avoidance policy before updating its forwarding table. The delay-time is in milliseconds. The range is from 1-60000. The default value is 5000.
 
-{% tabs %}
-{% tab title="ISIS" %}
 ```yaml
 ---
 ISIS_PROCESS: 'CORE'
 MICROLOOP_AVOIDANCE: True
+MICROLOOP_AVOIDANCE_DELAY: 5000
 TI_LFA_PROCESS: True
 TI_LFA: True
 INDEX: 1
@@ -111,15 +110,6 @@ NNI:
   - NAME: 'Te0/0/0/1'
   - NAME: 'Te0/0/0/2'
 ```
-{% endtab %}
-
-{% tab title="OSPF" %}
-```yaml
----
-MICROLOOP_AVOIDANCE_DELAY: 5000
-```
-{% endtab %}
-{% endtabs %}
 
 ### MPLS TE
 

@@ -2,7 +2,7 @@
 
 IOS XR RPL is a powerful replacement of traditional IOS route-maps. One of its main advantages is parametrisation. Parametrisation helps keep configuration unified and prevents from cloning blocks. For example you can create a policy like this:
 
-```text
+```bash
 route-policy RP-SET-LP($lp)
   set local-preference $lp
   pass
@@ -11,7 +11,7 @@ end-policy
 
 And attach it to a neighbor with a value for $lp in brackets:
 
-```text
+```bash
 router bgp 65535
  neighbor 198.51.100.2
   address-family ipv4 unicast
@@ -20,7 +20,7 @@ router bgp 65535
 
 Example with using prefix-sets as parameter.
 
-```text
+```csharp
 prefix-set PS-CUSTOMER-A
      203.0.113.0/24
 end-set
