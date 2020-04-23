@@ -2,6 +2,8 @@
 
 * [Introduction](README.md)
 * [IOS XR](ios-xr/README.md)
+  * [Segment Routing](ios-xr/segment-routing.md)
+  * [BGP VPNv4 Add-path](ios-xr/bgp-vpnv4-add-path.md)
   * [Netconf Template](ios-xr/ios-xr-netconf.md)
   * [MPLS Label Allocation](ios-xr/mpls-label-allocation.md)
   * [Pseudowire Headend](ios-xr/pwhe.md)
