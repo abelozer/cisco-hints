@@ -8,7 +8,7 @@ description: Generic netconf configuration for IOS XR.
 
 {% tabs %}
 {% tab title="Cisco IOS XR" %}
-```jinja2
+```text
 netconf-yang agent ssh
 !
 ssh server v2

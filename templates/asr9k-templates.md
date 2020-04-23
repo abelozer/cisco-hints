@@ -1,2 +1,0 @@
-# ASR9k Templates
-
