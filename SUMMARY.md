@@ -14,6 +14,7 @@
 * [IOS / IOS XE](ios.md)
 * [Configuration Templates](templates/README.md)
   * [IOS XR Templates](templates/ios-xr-templates/README.md)
+    * [Flexible CLI](templates/ios-xr-templates/flexible-cli.md)
     * [IOS XR Netconf](templates/ios-xr-templates/ios-xr-netconf.md)
   * [IOS XE Templates](templates/ios-xe-templates.md)
   * [ASR9k Templates](templates/asr9k-templates.md)
