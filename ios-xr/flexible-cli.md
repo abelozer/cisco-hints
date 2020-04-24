@@ -116,6 +116,8 @@ commit
 
 ### Interfaces
 
+Some default config for all interfaces:
+
 ```csharp
 group NNI-Main
  interface 'Gi.*'
@@ -152,7 +154,7 @@ end-group
 
 ### OSPF
 
-Change network type to point-to-point to all OSPF interface in area 0
+Change network type to point-to-point to all OSPF interface in area 0:
 
 ```csharp
 group OSPF-P2P
@@ -172,7 +174,7 @@ group OSPF-P2P
 end-group
 ```
 
-Set max-metric
+Set max-metric:
 
 ```csharp
 group MAX-METRIC-OSPF
@@ -185,7 +187,7 @@ group MAX-METRIC-OSPF
 end-group
 ```
 
-Enable Segment Routing for OSPF
+Enable Segment Routing for OSPF:
 
 ```csharp
 group SR-OSPF-AREA0
@@ -201,7 +203,7 @@ group SR-OSPF-AREA0
 end-group
 ```
 
-Enable TI-LFA for all OSPF interface in Area 0
+Enable TI-LFA for all OSPF interface in Area 0:
 
 ```csharp
 group OSPF-TI-LFA-AREA0
@@ -214,7 +216,7 @@ group OSPF-TI-LFA-AREA0
 end-group
 ```
 
-Enable TI-LFA for OSPF per interface
+Enable TI-LFA for OSPF per interface:
 
 ```csharp
 group OSPF-TI-LFA-PER-INTERFACE
@@ -237,7 +239,7 @@ group OSPF-TI-LFA-PER-INTERFACE
 end-group
 ```
 
-Enable TI-LFA for OSPF process
+Enable TI-LFA for OSPF process:
 
 ```csharp
 group OSPF-TI-LFA-PROCESS
@@ -250,7 +252,7 @@ end-group
 
 ### BGP
 
-Enable BGP Graceful Maintenance Mode for all BGP neighbours
+Enable BGP Graceful Maintenance Mode for all BGP neighbours:
 
 ```csharp
 group BGP-GRACEFUL-MAINTENANCE
@@ -281,7 +283,7 @@ end-group
 
 ### ISIS
 
-Enable Segment Routing for ISIS Level-2
+Enable Segment Routing for ISIS Level-2:
 
 ```csharp
 group SR-ISIS-LEVEL-2-ONLY
@@ -298,7 +300,7 @@ group SR-ISIS-LEVEL-2-ONLY
 end-group
 ```
 
-Enable ISIS TI-LFA
+Enable ISIS TI-LFA:
 
 ```csharp
 group ISIS-TI-LFA
