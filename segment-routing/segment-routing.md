@@ -124,3 +124,7 @@ MPLS traffic engineering functionality is required on SR node. The node advertis
 
 [Segment Routing Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 7.1.x](https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k-r7-1/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-71x.html)
 
+## Todo
+
+* [ ] Add flexalgo support to the templates
+
