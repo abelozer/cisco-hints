@@ -19,6 +19,7 @@ segment-routing global-block {{ SRGB_START }} {{ SRGB_END }}
 {% endif %}
 router isis {{ ISIS_PROCESS | default("1") }}
  address-family ipv4 unicast
+  router-id {{ RID_IFACE | default("Loopback0") }}
   metric-style wide
   mpls traffic-eng {{ ISIS_LEVEL | default("level-2-only") }}
   mpls traffic-eng router-id {{ RID_IFACE | default("Loopback0") }}
@@ -106,7 +107,7 @@ mpls traffic-eng
 ---
 ISIS_PROCESS: 'CORE'
 MICROLOOP_AVOIDANCE: True
-MICROLOOP_AVOIDANCE_DELAY: 5000
+# MICROLOOP_AVOIDANCE_DELAY: 5000 # default value is 5000
 TI_LFA_PROCESS: True
 TI_LFA: True
 INDEX: 1
@@ -115,11 +116,11 @@ NNI:
   - NAME: 'Te0/0/0/2'
 ```
 
-## MPLS TE
+## Notes
 
 MPLS traffic engineering functionality is required on SR node. The node advertises the traffic engineering link attributes in IGP which populate the traffic engineering database \(TED\) on the head-end. The SR-TE head-end requires the TED to calculate and validate the path of the SR-TE policy.
 
 ## Links
 
-[Segment Routing Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 6.3.x](https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k-r6-3/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-63x.html)
+[Segment Routing Configuration Guide for Cisco ASR 9000 Series Routers, IOS XR Release 7.1.x](https://www.cisco.com/c/en/us/td/docs/routers/asr9000/software/asr9k-r7-1/segment-routing/configuration/guide/b-segment-routing-cg-asr9000-71x.html)
 
