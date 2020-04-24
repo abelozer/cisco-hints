@@ -1,6 +1,10 @@
-# Segment Routing Template
+---
+description: SR IGP templates for IOS XR
+---
 
-## Jinja2 ISIS SR Template
+# IGP Configuration Template
+
+## Jinja2 IGP SR Template
 
 {% hint style="info" %}
 A default SRGB for IOS XR is 16000 – 23999.
