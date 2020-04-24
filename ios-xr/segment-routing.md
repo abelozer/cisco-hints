@@ -1,6 +1,6 @@
 # Segment Routing Template
 
-### Jinja2 ISIS SR Template
+## Jinja2 ISIS SR Template
 
 {% hint style="info" %}
 A default SRGB for IOS XR is 16000 – 23999.
@@ -94,7 +94,7 @@ mpls traffic-eng
 {% endtab %}
 {% endtabs %}
 
-### Sample Variables
+## Sample Variables
 
 `MICROLOOP_AVOIDANCE_DELAY` specifies the amount of time the node uses the microloop avoidance policy before updating its forwarding table. The delay-time is in milliseconds. The range is from 1-60000. The default value is 5000.
 
@@ -111,7 +111,7 @@ NNI:
   - NAME: 'Te0/0/0/2'
 ```
 
-### MPLS TE
+## MPLS TE
 
 MPLS traffic engineering functionality is required on SR node. The node advertises the traffic engineering link attributes in IGP which populate the traffic engineering database \(TED\) on the head-end. The SR-TE head-end requires the TED to calculate and validate the path of the SR-TE policy.
 
