@@ -8,7 +8,10 @@
     "styleguide",
     "richquotes",
     "highlight",
-    "todo"
+    "todo",
+    "toggle-chapters",
+    "navigator",
+    "downloadpdf"
   ],
   "keywords": [
     "cisco",
