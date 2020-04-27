@@ -1112,8 +1112,6 @@ RP/0/RP0/CPU0:ios# run mdt_exec -s Cisco-IOS-XR-ipv4-bgp-oper:bgp/instances/inst
 
 Another example:
 
-
-
 ```erlang
 RP/0/RP0/CPU0:NCS540-02#run mdt_exec -s Cisco-IOS-XR-infra-statsd-oper:infra-statistics/interfaces/interface/latest/generic-counters -c 10000
 Mon Mar 30 13:26:38.811 UTC
@@ -1152,5 +1150,77 @@ Corresponding metrics.json
         }
     }
 ]
+```
+
+## Telemetry Software Stack
+
+### Docker Network
+
+```bash
+docker network create influxdb
+```
+
+### InfluxDB
+
+```bash
+docker run -it -d --name=influxdb \
+      --net=influxdb \
+      -p 8083:8083 \
+      -p 8086:8086 \
+      influxdb
+```
+
+### **InfluxDB Logs**
+
+```bash
+docker logs -f influxdb
+```
+
+```bash
+docker exec -it influxdb influx
+```
+
+### Telegraf
+
+```bash
+docker run -d --name=telegraf \
+      --net=influxdb \
+      -p 57000:57000 \
+      -v ~/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+      telegraf
+```
+
+```erlang
+# telegraf.conf
+# Global Agent Configuration
+[agent]
+hostname = "telemetry-container"
+flush_interval = "15s"
+interval = "15s"
+
+# gRPC Dial-Out Telemetry Listener
+[[inputs.cisco_telemetry_mdt]]
+transport = "grpc"
+service_address = ":57000"
+
+# Output Plugin InfluxDB
+[[outputs.influxdb]]
+database = "telegraf"
+urls = [ "http://influxdb:8086" ]
+username = "telegraf"
+password = "telegraf"
+```
+
+```bash
+docker logs -f telegraf
+```
+
+### Grafana
+
+```bash
+docker run -d --name=grafana \
+      --net=influxdb \
+      -p 3000:3000 \
+      grafana/grafana
 ```
 
