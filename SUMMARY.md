@@ -4,6 +4,8 @@
 * [Segment Routing](segment-routing/README.md)
   * [IGP Configuration Template](segment-routing/segment-routing.md)
 * [IOS XR](ios-xr/README.md)
+  * [MPLS TE Affinity](ios-xr/mpls-te-affinity.md)
+  * [BFD on Bundle Member Links](ios-xr/bfd-on-bundle-member-links.md)
   * [Streaming Telemetry](ios-xr/streaming-telemetry.md)
   * [IOS XR Netflow Template](ios-xr/ios-xr-netflow-template.md)
   * [ASR9k REP-AG PVID Inconsistency](ios-xr/asr9k-repag-pvid-inconsistency.md)
