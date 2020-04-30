@@ -1,4 +1,4 @@
-# MPLS TE Affinity
+# MPLS TE Affinity for L2VPN
 
 The default affinity value for MPLS TE tunnel is 0x0 with mask 0xFFFF. The mask means that 16 bits of a link attribute-flag are compared with tunnel affinity value. At least 16 first bits of attribute flag should be zeros. Each bit which has 1 in the mask is compared between affinity and attribute-flag. Let's look at a default example.
 
