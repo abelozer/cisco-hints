@@ -1,6 +1,6 @@
 # Test 8.4: NTP functionality
 
-**NTP configuration example**
+## **NTP configuration example**
 
 ```text
 ntp
@@ -13,7 +13,7 @@ ntp
 !
 ```
 
-**NTP Verification**
+## **NTP Verification**
 
 ```text
 RP/0/RP0/CPU0:NCS540-02#sh ntp associations

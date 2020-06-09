@@ -1,8 +1,8 @@
 # Test 4.1: Core PIM ASM with auto-RP and redundant RPs
 
-**PIM ASM with auto-rp configurtation template**
+## **PIM ASM with Auto-rp configurtation template**
 
-```text
+```erlang
 multicast-routing
  address-family ipv4
   interface all enable
@@ -10,9 +10,9 @@ multicast-routing
 !
 ```
 
-**PIM ASM with auto-rp configurtation example**
+## **PIM ASM with auto-rp configurtation example**
 
-```text
+```erlang
 multicast-routing
  address-family ipv4
   interface all enable
@@ -20,7 +20,7 @@ multicast-routing
 !
 ```
 
-**PIM ASM verification**
+## **PIM ASM verification**
 
 ```text
 RP/0/0/CPU0:P3#sho pim interface
@@ -37,7 +37,7 @@ Address               Interface                     PIM  Nbr   Hello  DR    DR
 172.16.32.13          GigabitEthernet0/0/0/3        on   2     30     1     this system
 ```
 
-```text
+```erlang
 RP/0/0/CPU0:P3#show pim neighbor
 Mon Jun  8 13:25:13.014 UTC
 
@@ -58,7 +58,7 @@ Neighbor Address             Interface              Uptime    Expires  DR pri   
 172.16.32.13*                GigabitEthernet0/0/0/3 3d23h     00:01:42 1 (DR) B E
 ```
 
-```text
+```erlang
 RP/0/0/CPU0:P3#show pim rp mapping
 Mon Jun  8 13:25:32.893 UTC
 PIM Group-to-RP Mappings
@@ -68,7 +68,7 @@ Group(s) 224.0.0.0/4
       Uptime: 3d23h, expires: 00:03:00
 ```
 
-```text
+```erlang
 RP/0/0/CPU0:P3#show mfib interface
 Mon Jun  8 13:23:52.929 UTC
 

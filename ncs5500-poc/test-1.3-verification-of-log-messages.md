@@ -1,8 +1,6 @@
 # Test 1.3: Verification of Log Messages
 
-
-
-
+## Logging configuration template
 
 ```erlang
 logging console disable

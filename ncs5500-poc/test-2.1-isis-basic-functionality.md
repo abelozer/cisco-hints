@@ -4,7 +4,7 @@
 Be aware of IS-IS multitopology support on Huawei and Juniper.
 {% endhint %}
 
-**ISIS Configuration Template**
+## **ISIS Configuration Template**
 
 ```erlang
 router isis {{ ISIS_PROCESS_NAME }}
@@ -35,7 +35,7 @@ router isis {{ ISIS_PROCESS_NAME }}
  !
 ```
 
-**ISIS Configuration Example**
+## **ISIS Configuration Example**
 
 ```erlang
 router isis CORE
@@ -88,7 +88,7 @@ router isis CORE
 !
 ```
 
-**ISIS Verification**
+## **ISIS Verification**
 
 ```erlang
 RP/0/0/CPU0:P3#show isis interface brief

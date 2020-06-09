@@ -18,7 +18,7 @@ aaa password-policy AAA-PASSWORD-HARDENING
  max-char-repetition 2
 ```
 
-```text
+```erlang
 ssh server logging
 ssh server disable hmac hmac-sha1
 ssh server algorithms cipher aes256-ctr aes128-gcm@openssh.com aes256-gcm@openssh.com

@@ -1,6 +1,6 @@
 # Test 2.2: BGP basic functionality
 
-**BGP Configuration Template**
+## **BGP Configuration Template**
 
 {% hint style="info" %}
 iBGP IPv4 template.
@@ -20,7 +20,7 @@ router bgp {{ BGP_ASN }}
 ! 
 ```
 
-**BGP Configuration Example**
+## **BGP Configuration Example**
 
 ```erlang
 router bgp 100
@@ -36,7 +36,7 @@ router bgp 100
 !
 ```
 
-**BGP Verification**
+## **BGP Verification**
 
 ```erlang
 RP/0/0/CPU0:P3#sh bgp all all summary
