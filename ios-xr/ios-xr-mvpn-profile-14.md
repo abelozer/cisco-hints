@@ -1,6 +1,6 @@
 # IOS XR mVPN Profile 14
 
-{% hint style="danger" %}
+{% hint style="info" %}
 Make sure your software version supports mVPN Profile 14.
 {% endhint %}
 
@@ -10,9 +10,15 @@ Make sure your software version supports mVPN Profile 14.
 
 ## Configuration
 
+mVPN configuration is identical for all PEs.
+
+{% hint style="info" %}
+Only mVPN relevant configuration is listed below.
+{% endhint %}
+
 {% tabs %}
 {% tab title="Egress PE1" %}
-```
+```aspnet
 hostname PE1
 !
 vrf A
@@ -81,7 +87,7 @@ router bgp 1
   !
  !
  vrf A
-  rd 1:1
+  rd auto
   address-family ipv4 unicast
    redistribute connected
   !
@@ -159,6 +165,7 @@ interface Loopback0
  ipv4 address 2.2.2.2 255.255.255.255
 !
 interface Loopback100
+ description VRF-A RP
  vrf A
  ipv4 address 21.21.21.21 255.255.255.255
 !
@@ -173,10 +180,6 @@ interface GigabitEthernet0/0/0/2
 !
 route-policy PASS
   pass
-end-policy
-!
-route-policy mVPN-Profile-12
-  set core-tree mldp-default
 end-policy
 !
 route-policy mVPN-Profile-14
@@ -218,7 +221,7 @@ router bgp 1
   !
  !
  vrf A
-  rd 1:1
+  rd auto
   address-family ipv4 unicast
    redistribute connected
   !
@@ -308,10 +311,6 @@ route-policy PASS
   pass
 end-policy
 !
-route-policy mVPN-Profile-12
-  set core-tree mldp-default
-end-policy
-!
 route-policy mVPN-Profile-14
   set core-tree mldp-partitioned-p2mp
 end-policy
@@ -351,7 +350,7 @@ router bgp 1
   !
  !
  vrf A
-  rd 1:1
+  rd auto
   address-family ipv4 unicast
    redistribute connected
   !
