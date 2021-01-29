@@ -610,16 +610,157 @@ Reply to request 2 from 192.168.101.1, 14 ms
 ### No receivers, no active sources
 
 ```text
+RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn 
+Fri Jan 29 10:16:00.261 UTC
+BGP VRF A, state: Active
+BGP Route Distinguisher: 1.1.1.1:0
+VRF ID: 0x60000001
+BGP router identifier 1.1.1.1, local AS number 1
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0x0   RD version: 23
+BGP main routing table version 23
+BGP NSR Initial initsync version 8 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
 
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 1.1.1.1:0 (default for vrf A)
+*> [1][1.1.1.1]/40    0.0.0.0                                0 i
+*>i[1][2.2.2.2]/40    2.2.2.2                       100      0 i
+*>i[1][3.3.3.3]/40    3.3.3.3                       100      0 i
+*> [3][0][0.0.0.0][0][0.0.0.0][1.1.1.1]/120
+                      0.0.0.0                                0 i
+*>i[3][0][0.0.0.0][0][0.0.0.0][2.2.2.2]/120
+                      2.2.2.2                       100      0 i
+*>i[3][0][0.0.0.0][0][0.0.0.0][3.3.3.3]/120
+                      3.3.3.3                       100      0 i
+
+Processed 6 prefixes, 6 paths
 ```
 
 ### Active receiver, no active sources
+
+{% tabs %}
+{% tab title="PE1" %}
+```text
+RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn 
+Fri Jan 29 10:17:27.055 UTC
+BGP VRF A, state: Active
+BGP Route Distinguisher: 1.1.1.1:0
+VRF ID: 0x60000001
+BGP router identifier 1.1.1.1, local AS number 1
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0x0   RD version: 24
+BGP main routing table version 24
+BGP NSR Initial initsync version 8 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 1.1.1.1:0 (default for vrf A)
+*> [1][1.1.1.1]/40    0.0.0.0                                0 i
+*>i[1][2.2.2.2]/40    2.2.2.2                       100      0 i
+*>i[1][3.3.3.3]/40    3.3.3.3                       100      0 i
+*> [3][0][0.0.0.0][0][0.0.0.0][1.1.1.1]/120
+                      0.0.0.0                                0 i
+*>i[3][0][0.0.0.0][0][0.0.0.0][2.2.2.2]/120
+                      2.2.2.2                       100      0 i
+*>i[3][0][0.0.0.0][0][0.0.0.0][3.3.3.3]/120
+                      3.3.3.3                       100      0 i
+*> [7][2.2.2.2:0][1][32][192.168.2.2][32][232.1.1.1]/184
+                      0.0.0.0                                0 i
+
+Processed 7 prefixes, 7 paths
+```
+{% endtab %}
+
+{% tab title="PE2" %}
+```
+RP/0/0/CPU0:PE2#sh bgp vrf A ipv4 mvpn 
+Fri Jan 29 10:18:35.241 UTC
+BGP VRF A, state: Active
+BGP Route Distinguisher: 2.2.2.2:0
+VRF ID: 0x60000001
+BGP router identifier 2.2.2.2, local AS number 1
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0x0   RD version: 35
+BGP main routing table version 35
+BGP NSR Initial initsync version 4 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 2.2.2.2:0 (default for vrf A)
+*>i[1][1.1.1.1]/40    1.1.1.1                       100      0 i
+*> [1][2.2.2.2]/40    0.0.0.0                                0 i
+*>i[1][3.3.3.3]/40    3.3.3.3                       100      0 i
+*>i[3][0][0.0.0.0][0][0.0.0.0][1.1.1.1]/120
+                      1.1.1.1                       100      0 i
+*> [3][0][0.0.0.0][0][0.0.0.0][2.2.2.2]/120
+                      0.0.0.0                                0 i
+*>i[3][0][0.0.0.0][0][0.0.0.0][3.3.3.3]/120
+                      3.3.3.3                       100      0 i
+*>i[7][2.2.2.2:0][1][32][192.168.2.2][32][232.1.1.1]/184
+                      1.1.1.1                       100      0 i
+* i                   3.3.3.3                       100      0 i
+
+Processed 7 prefixes, 8 paths
+```
+{% endtab %}
+
+{% tab title="PE3" %}
+```
+RP/0/0/CPU0:PE3#sh bgp vrf A ipv4 mvpn 
+Fri Jan 29 10:19:00.929 UTC
+BGP VRF A, state: Active
+BGP Route Distinguisher: 3.3.3.3:0
+VRF ID: 0x60000001
+BGP router identifier 3.3.3.3, local AS number 1
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0x0   RD version: 24
+BGP main routing table version 24
+BGP NSR Initial initsync version 4 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 3.3.3.3:0 (default for vrf A)
+*>i[1][1.1.1.1]/40    1.1.1.1                       100      0 i
+*>i[1][2.2.2.2]/40    2.2.2.2                       100      0 i
+*> [1][3.3.3.3]/40    0.0.0.0                                0 i
+*>i[3][0][0.0.0.0][0][0.0.0.0][1.1.1.1]/120
+                      1.1.1.1                       100      0 i
+*>i[3][0][0.0.0.0][0][0.0.0.0][2.2.2.2]/120
+                      2.2.2.2                       100      0 i
+*> [3][0][0.0.0.0][0][0.0.0.0][3.3.3.3]/120
+                      0.0.0.0                                0 i
+*> [7][2.2.2.2:0][1][32][192.168.2.2][32][232.1.1.1]/184
+                      0.0.0.0                                0 i
+
+Processed 7 prefixes, 7 paths
+```
+{% endtab %}
+{% endtabs %}
+
+### No receivers, there's an active source
 
 ```text
 
 ```
 
-### No receivers, there's an active source
+### Active receivers and active source
 
 ```text
 
