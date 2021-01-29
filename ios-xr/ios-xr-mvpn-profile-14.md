@@ -1,7 +1,7 @@
 # IOS XR mVPN Profile 14
 
 {% hint style="danger" %}
-Make sure your hardware supports mVPN Profile 14.
+Make sure your software version supports mVPN Profile 14.
 {% endhint %}
 
 ## Topology
@@ -520,6 +520,26 @@ end
 ```
 
 ## mVPN interoperability issues
+
+Several vendors depending on a software version are using pre-RFC encoding for `C-Mcast Import RT`. In this case you won't find a correct extended community in VPNv4 updates. Instead there will be \_\_\_\_\_\_\_.
+
+#### Wrong encoding
+
+Below you can find CLI to switch to RFC encoding.
+
+{% tabs %}
+{% tab title="Nokia" %}
+```text
+
+```
+{% endtab %}
+
+{% tab title="Juniper" %}
+```
+
+```
+{% endtab %}
+{% endtabs %}
 
 
 
