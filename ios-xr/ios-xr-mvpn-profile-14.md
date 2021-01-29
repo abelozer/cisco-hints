@@ -8,6 +8,8 @@ Make sure your software version supports mVPN Profile 14.
 
 ![](../.gitbook/assets/mvpn-topology.png)
 
+1. C-RP is configured on PE2: 21.21.21.21. All other router have C-RP statically defined.
+
 ## Configuration
 
 mVPN configuration is identical for all PEs.
@@ -459,15 +461,67 @@ end
 {% endtabs %}
 
 {% tabs %}
-{% tab title="Source/CE2" %}
+{% tab title="Receiver/CE1" %}
 ```text
-
+hostname CE1
+!
+interface Loopback0
+ ip address 192.168.0.1 255.255.255.255
+ ip pim sparse-mode
+ ip igmp join-group 232.1.1.1 source 192.168.2.2
+ ip igmp version 3
+!
+interface Loopback1
+ ip address 192.168.101.1 255.255.255.255
+ ip pim sparse-mode
+ ip igmp join-group 239.1.1.2
+!
+interface GigabitEthernet0/0
+ description to GigabitEthernet0/0/0/0.PE1
+ ip address 192.168.1.2 255.255.255.0
+ ip pim sparse-mode
+!
+router bgp 2
+ bgp log-neighbor-changes
+ neighbor 192.168.1.1 remote-as 1
+ !
+ address-family ipv4
+  redistribute connected
+  neighbor 192.168.1.1 activate
+ exit-address-family
+!
+ip pim rp-address 21.21.21.21
+ip pim ssm range 1
+!
+access-list 1 permit 232.0.0.0 0.255.255.255
+!
+end
 ```
 {% endtab %}
 
-{% tab title="Receiver/CE1" %}
+{% tab title="Source/CE2" %}
 ```
-
+hostname CE2
+!
+interface GigabitEthernet0/0
+ description to GigabitEthernet0/0/0/0.PE2
+ ip address 192.168.2.2 255.255.255.0
+ ip pim sparse-mode
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router bgp 2
+ bgp log-neighbor-changes
+ neighbor 192.168.2.1 remote-as 1
+ !
+ address-family ipv4
+  neighbor 192.168.2.1 activate
+ exit-address-family
+!
+ip pim rp-address 21.21.21.21
+!
+end
 ```
 {% endtab %}
 
