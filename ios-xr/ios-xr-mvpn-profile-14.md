@@ -1056,6 +1056,679 @@ Paths: (1 available, best #1)
       Source AFI: VPNv4 Unicast, Source VRF: default, Source Route Distinguisher: 2.2.2.2:0
 ```
 
+#### MLDP
+
+{% tabs %}
+{% tab title="PE1" %}
+```text
+RP/0/0/CPU0:PE1#sh mpl mldp database brief   
+Fri Jan 29 20:39:59.845 UTC
+
+LSM ID   Type    Root              Up Down Decoded Opaque Value
+0x00001  P2MP    1.1.1.1           0  1    [global-id 1]                 
+0x00002  P2MP    2.2.2.2           1  1    [global-id 1]
+
+
+RP/0/0/CPU0:PE1#sh mpl mldp database       
+Fri Jan 29 20:40:45.081 UTC
+mLDP database
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:08:34
+  FEC Root           : 1.1.1.1 (we are the root)
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:08:34
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+
+LSM-ID: 0x00002  Type: P2MP  Uptime: 00:06:54
+  FEC Root           : 2.2.2.2 
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    10.10.10.10:0 [Active] Uptime: 00:06:54  
+      Local Label (D) : 24006             
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:06:54
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      RPF ID          : 3
+      RD              : 514:33685504
+
+
+RP/0/0/CPU0:PE1#sh mpl mldp database details 
+Fri Jan 29 20:41:41.848 UTC
+mLDP database
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:09:31
+  FEC Root           : 1.1.1.1 (we are the root)
+  FEC Length         : 12 bytes
+  FEC Value internal : 020100040000000101010101
+  Opaque length      : 4 bytes
+  Opaque value       : 01 0004 00000001
+  Opaque decoded     : [global-id 1]
+  Features           : Trace
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:09:31
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      Peek            : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+
+LSM-ID: 0x00002  Type: P2MP  Uptime: 00:07:51
+  FEC Root           : 2.2.2.2 
+  FEC Length         : 12 bytes
+  FEC Value internal : 020100040000000102020202
+  Opaque length      : 4 bytes
+  Opaque value       : 01 0004 00000001
+  Opaque decoded     : [global-id 1]
+  Features           : Trace
+  Upstream neighbor(s) :
+    10.10.10.10:0 [Active] Uptime: 00:07:51  
+      Local Label (D) : 24006             
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:07:51
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      RPF ID          : 3
+      Peek            : Yes
+      RD              : 514:33685504
+```
+{% endtab %}
+
+{% tab title="PE2" %}
+```
+RP/0/0/CPU0:PE2#sh mpl mldp database brief
+Fri Jan 29 20:42:44.193 UTC
+
+LSM ID   Type    Root              Up Down Decoded Opaque Value
+0x00001  P2MP    2.2.2.2           0  2    [global-id 1]                 
+
+
+RP/0/0/CPU0:PE2#sh mpl mldp database      
+Fri Jan 29 20:42:52.213 UTC
+mLDP database
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:12:40
+  FEC Root           : 2.2.2.2 (we are the root)
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    LDP 10.10.10.10:0  Uptime: 00:09:02
+      Next Hop         : 10.0.102.10
+      Interface        : GigabitEthernet0/0/0/2 
+      Remote label (D) : 24003             
+    PIM MDT            Uptime: 00:12:40
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+
+
+RP/0/0/CPU0:PE2#sh mpl mldp database details 
+Fri Jan 29 20:42:59.702 UTC
+mLDP database
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:12:48
+  FEC Root           : 2.2.2.2 (we are the root)
+  FEC Length         : 12 bytes
+  FEC Value internal : 020100040000000102020202
+  Opaque length      : 4 bytes
+  Opaque value       : 01 0004 00000001
+  Opaque decoded     : [global-id 1]
+  Features           : Trace
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    LDP 10.10.10.10:0  Uptime: 00:09:09
+      Next Hop         : 10.0.102.10
+      Interface        : GigabitEthernet0/0/0/2 
+      Remote label (D) : 24003             
+      LDP MSG ID       : 35
+    PIM MDT            Uptime: 00:12:48
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      Peek            : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+```
+{% endtab %}
+
+{% tab title="PE3" %}
+```
+RP/0/0/CPU0:PE3#sh mpl mldp database brief
+Fri Jan 29 20:51:16.139 UTC
+
+LSM ID   Type    Root              Up Down Decoded Opaque Value
+0x00002  P2MP    2.2.2.2           1  1    [global-id 1]                 
+0x00001  P2MP    3.3.3.3           0  1    [global-id 1]
+
+                              
+RP/0/0/CPU0:PE3#sh mpl mldp database      
+Fri Jan 29 20:51:18.288 UTC
+mLDP database
+LSM-ID: 0x00002  Type: P2MP  Uptime: 00:17:28
+  FEC Root           : 2.2.2.2 
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    10.10.10.10:0 [Active] Uptime: 00:17:28  
+      Local Label (D) : 24006             
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:17:28
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      RPF ID          : 3
+      RD              : 514:33685504
+
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:19:10
+  FEC Root           : 3.3.3.3 (we are the root)
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:19:10
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+
+
+RP/0/0/CPU0:PE3#sh mpl mldp database details 
+Fri Jan 29 20:51:22.808 UTC
+mLDP database
+LSM-ID: 0x00002  Type: P2MP  Uptime: 00:17:32
+  FEC Root           : 2.2.2.2 
+  FEC Length         : 12 bytes
+  FEC Value internal : 020100040000000102020202
+  Opaque length      : 4 bytes
+  Opaque value       : 01 0004 00000001
+  Opaque decoded     : [global-id 1]
+  Features           : Trace
+  Upstream neighbor(s) :
+    10.10.10.10:0 [Active] Uptime: 00:17:32  
+      Local Label (D) : 24006             
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:17:32
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      RPF ID          : 3
+      Peek            : Yes
+      RD              : 514:33685504
+
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:19:15
+  FEC Root           : 3.3.3.3 (we are the root)
+  FEC Length         : 12 bytes
+  FEC Value internal : 020100040000000103030303
+  Opaque length      : 4 bytes
+  Opaque value       : 01 0004 00000001
+  Opaque decoded     : [global-id 1]
+  Features           : Trace
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:19:15
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      Peek            : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+```
+{% endtab %}
+
+{% tab title="P" %}
+```
+RP/0/0/CPU0:P#sh mpl mldp database brief
+Fri Jan 29 21:15:57.137 UTC
+
+LSM ID   Type    Root              Up Down Decoded Opaque Value
+0x00001  P2MP    2.2.2.2           1  2    [global-id 1]                 
+
+
+RP/0/0/CPU0:P#sh mpl mldp database      
+Fri Jan 29 21:15:59.376 UTC
+mLDP database
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:42:08
+  FEC Root           : 2.2.2.2 
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    2.2.2.2:0 [Active] Uptime: 00:42:08  
+      Local Label (D) : 24003             
+  Downstream  client(s): 
+    LDP 1.1.1.1:0      Uptime: 00:42:08
+      Next Hop         : 10.0.101.1
+      Interface        : GigabitEthernet0/0/0/1 
+      Remote label (D) : 24006             
+    LDP 3.3.3.3:0      Uptime: 00:42:08
+      Next Hop         : 10.0.103.3
+      Interface        : GigabitEthernet0/0/0/3 
+      Remote label (D) : 24006             
+
+
+RP/0/0/CPU0:P#sh mpl mldp database details 
+Fri Jan 29 21:16:02.986 UTC
+mLDP database
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:42:12
+  FEC Root           : 2.2.2.2 
+  FEC Length         : 12 bytes
+  FEC Value internal : 020100040000000102020202
+  Opaque length      : 4 bytes
+  Opaque value       : 01 0004 00000001
+  Opaque decoded     : [global-id 1]
+  Features           : Trace
+  Upstream neighbor(s) :
+    2.2.2.2:0 [Active] Uptime: 00:42:12  
+      Local Label (D) : 24003             
+  Downstream  client(s): 
+    LDP 1.1.1.1:0      Uptime: 00:42:12
+      Next Hop         : 10.0.101.1
+      Interface        : GigabitEthernet0/0/0/1 
+      Remote label (D) : 24006             
+      LDP MSG ID       : 12
+    LDP 3.3.3.3:0      Uptime: 00:42:12
+      Next Hop         : 10.0.103.3
+      Interface        : GigabitEthernet0/0/0/3 
+      Remote label (D) : 24006             
+      LDP MSG ID       : 5
+```
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="PE1" %}
+```text
+RP/0/0/CPU0:PE1#show mpls mldp bindings 
+Fri Jan 29 20:49:35.925 UTC
+mLDP MPLS Bindings database
+
+LSP-ID: 0x00001 Paths: 1 Flags: Pk
+ 0x00001 P2MP   1.1.1.1 [global-id 1]
+   Local Label: 24000 Remote: 1048577 Inft: LmdtA RPF-ID: 0 TIDv4/v6: 0xE0000010/0xE0800010
+
+LSP-ID: 0x00002 Paths: 2 Flags: Pk
+ 0x00002 P2MP   2.2.2.2 [global-id 1]
+   Local Label: 24006 Active
+   Remote Label: 1048577 Inft: LmdtA RPF-ID: 3 TIDv4/v6: 0xE0000010/0xE0800010
+```
+{% endtab %}
+
+{% tab title="PE2" %}
+```
+RP/0/0/CPU0:PE2#show mpls mldp bindings
+Fri Jan 29 20:50:08.693 UTC
+mLDP MPLS Bindings database
+
+LSP-ID: 0x00001 Paths: 2 Flags: Pk
+ 0x00001 P2MP   2.2.2.2 [global-id 1]
+   Local Label: 24000 Remote: 1048577 Inft: LmdtA RPF-ID: 0 TIDv4/v6: 0xE0000010/0xE0800010
+   Remote Label: 24003 NH: 10.0.102.10 Inft: GigabitEthernet0/0/0/2
+```
+{% endtab %}
+
+{% tab title="PE3" %}
+```
+RP/0/0/CPU0:PE3#show mpls mldp bindings
+Fri Jan 29 20:50:42.431 UTC
+mLDP MPLS Bindings database
+
+LSP-ID: 0x00001 Paths: 1 Flags: Pk
+ 0x00001 P2MP   3.3.3.3 [global-id 1]
+   Local Label: 24000 Remote: 1048577 Inft: LmdtA RPF-ID: 0 TIDv4/v6: 0xE0000010/0xE0800010
+
+LSP-ID: 0x00002 Paths: 2 Flags: Pk
+ 0x00002 P2MP   2.2.2.2 [global-id 1]
+   Local Label: 24006 Active
+   Remote Label: 1048577 Inft: LmdtA RPF-ID: 3 TIDv4/v6: 0xE0000010/0xE0800010
+```
+{% endtab %}
+
+{% tab title="P" %}
+```
+RP/0/0/CPU0:P#show mpls mldp bindings
+Fri Jan 29 21:15:17.199 UTC
+mLDP MPLS Bindings database
+
+LSP-ID: 0x00001 Paths: 3 Flags:
+ 0x00001 P2MP   2.2.2.2 [global-id 1]
+   Local Label: 24003 Active
+   Remote Label: 24006 NH: 10.0.101.1 Inft: GigabitEthernet0/0/0/1
+   Remote Label: 24006 NH: 10.0.103.3 Inft: GigabitEthernet0/0/0/3
+```
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="PE1" %}
+```text
+RP/0/0/CPU0:PE1#show mpls mldp lsm-id
+Fri Jan 29 20:52:13.344 UTC
+mLDP database
+LSM-ID: 0x00001  VRF: default  Type: P2MP  Uptime: 00:20:02
+  FEC Root           : 1.1.1.1 (we are the root)
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:20:02
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+
+LSM-ID: 0x00002  VRF: default  Type: P2MP  Uptime: 00:18:22
+  FEC Root           : 2.2.2.2 
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    10.10.10.10:0 [Active] Uptime: 00:18:22  
+      Local Label (D) : 24006             
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:18:22
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      RPF ID          : 3
+      RD              : 514:33685504
+```
+{% endtab %}
+
+{% tab title="PE2" %}
+```
+RP/0/0/CPU0:PE2#show mpls mldp lsm-id
+Fri Jan 29 20:53:00.801 UTC
+mLDP database
+LSM-ID: 0x00001  VRF: default  Type: P2MP  Uptime: 00:22:49
+  FEC Root           : 2.2.2.2 (we are the root)
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    LDP 10.10.10.10:0  Uptime: 00:19:10
+      Next Hop         : 10.0.102.10
+      Interface        : GigabitEthernet0/0/0/2 
+      Remote label (D) : 24003             
+    PIM MDT            Uptime: 00:22:49
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+```
+{% endtab %}
+
+{% tab title="PE3" %}
+```
+RP/0/0/CPU0:PE3#show mpls mldp lsm-id
+Fri Jan 29 20:53:35.669 UTC
+mLDP database
+LSM-ID: 0x00001  VRF: default  Type: P2MP  Uptime: 00:21:28
+  FEC Root           : 3.3.3.3 (we are the root)
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:21:28
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+
+LSM-ID: 0x00002  VRF: default  Type: P2MP  Uptime: 00:19:45
+  FEC Root           : 2.2.2.2 
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    10.10.10.10:0 [Active] Uptime: 00:19:45  
+      Local Label (D) : 24006             
+  Downstream  client(s): 
+    PIM MDT            Uptime: 00:19:45
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      RPF ID          : 3
+      RD              : 514:33685504
+```
+{% endtab %}
+
+{% tab title="P" %}
+```
+RP/0/0/CPU0:P#show mpls mldp lsm-id
+Fri Jan 29 21:14:50.611 UTC
+mLDP database
+LSM-ID: 0x00001  VRF: default  Type: P2MP  Uptime: 00:41:00
+  FEC Root           : 2.2.2.2 
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    2.2.2.2:0 [Active] Uptime: 00:41:00  
+      Local Label (D) : 24003             
+  Downstream  client(s): 
+    LDP 1.1.1.1:0      Uptime: 00:41:00
+      Next Hop         : 10.0.101.1
+      Interface        : GigabitEthernet0/0/0/1 
+      Remote label (D) : 24006             
+    LDP 3.3.3.3:0      Uptime: 00:41:00
+      Next Hop         : 10.0.103.3
+      Interface        : GigabitEthernet0/0/0/3 
+      Remote label (D) : 24006
+```
+{% endtab %}
+{% endtabs %}
+
+```text
+RP/0/0/CPU0:PE2#sh mrib vrf A route 232.1.1.1 192.168.2.2 detail 
+Fri Jan 29 21:08:04.149 UTC
+
+IP Multicast Routing Information Base
+Entry flags: L - Domain-Local Source, E - External Source to the Domain,
+    C - Directly-Connected Check, S - Signal, IA - Inherit Accept,
+    IF - Inherit From, D - Drop, ME - MDT Encap, EID - Encap ID,
+    MD - MDT Decap, MT - MDT Threshold Crossed, MH - MDT interface handle
+    CD - Conditional Decap, MPLS - MPLS Decap, EX - Extranet
+    MoFE - MoFRR Enabled, MoFS - MoFRR State, MoFP - MoFRR Primary
+    MoFB - MoFRR Backup, RPFID - RPF ID Set, X - VXLAN
+Interface flags: F - Forward, A - Accept, IC - Internal Copy,
+    NS - Negate Signal, DP - Don't Preserve, SP - Signal Present,
+    II - Internal Interest, ID - Internal Disinterest, LI - Local Interest,
+    LD - Local Disinterest, DI - Decapsulation Interface
+    EI - Encapsulation Interface, MI - MDT Interface, LVIF - MPLS Encap,
+    EX - Extranet, A2 - Secondary Accept, MT - MDT Threshold Crossed,
+    MA - Data MDT Assigned, LMI - mLDP MDT Interface, TMI - P2MP-TE MDT Interface
+    IRMI - IR MDT Interface
+
+(192.168.2.2,232.1.1.1) Ver: 0x611e RPF nbr: 192.168.2.2 Flags: RPF EID, FMA: 0x10000
+  Up: 00:34:14
+  RPF-ID: 0, Encap-ID: 1
+  Incoming Interface List
+    GigabitEthernet0/0/0/0 Flags: A, Up: 00:34:14
+  Outgoing Interface List
+    LmdtA Flags: F LMI TR, Up: 00:34:14, Head LSM-ID: 0x00001
+
+      
+RP/0/0/CPU0:PE2#sh mpl mldp database 0x00001
+Fri Jan 29 21:08:35.777 UTC
+mLDP database
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:38:24
+  FEC Root           : 2.2.2.2 (we are the root)
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    LDP 10.10.10.10:0  Uptime: 00:34:45
+      Next Hop         : 10.0.102.10
+      Interface        : GigabitEthernet0/0/0/2 
+      Remote label (D) : 24003             
+    PIM MDT            Uptime: 00:38:24
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+```
+
+{% tabs %}
+{% tab title="PE1" %}
+```text
+RP/0/0/CPU0:PE1#sh mpl forwarding 
+Fri Jan 29 21:11:56.563 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24000  Unlabelled  mLDP/IR: 0x00001
+24001  24000       2.2.2.2/32         Gi0/0/0/1    10.0.101.10     46536       
+24002  24001       3.3.3.3/32         Gi0/0/0/1    10.0.101.10     4896        
+24003  Pop         10.10.10.10/32     Gi0/0/0/1    10.0.101.10     5028        
+24004  Pop         10.0.102.0/24      Gi0/0/0/1    10.0.101.10     0           
+24005  Pop         10.0.103.0/24      Gi0/0/0/1    10.0.101.10     0           
+24006  Unlabelled  mLDP/IR: 0x00002
+24007  Unlabelled  192.168.0.1/32[V]  Gi0/0/0/0    192.168.1.2     0           
+24008  Aggregate   A: Per-VRF Aggr[V] A                            0           
+24009  Unlabelled  192.168.101.1/32[V]   \
+                                      Gi0/0/0/0    192.168.1.2     0
+```
+{% endtab %}
+
+{% tab title="P" %}
+```
+RP/0/0/CPU0:P#sh mpl forwarding 
+Fri Jan 29 21:13:01.089 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24000  Pop         2.2.2.2/32         Gi0/0/0/2    10.0.102.2      98182       
+24001  Pop         3.3.3.3/32         Gi0/0/0/3    10.0.103.3      12794       
+24002  Pop         1.1.1.1/32         Gi0/0/0/1    10.0.101.1      13465       
+24003  24006       mLDP/IR: 0x00001   Gi0/0/0/1    10.0.101.1      0           
+       24006       mLDP/IR: 0x00001   Gi0/0/0/3    10.0.103.3      0
+```
+{% endtab %}
+
+{% tab title="PE2" %}
+```
+RP/0/0/CPU0:PE2#sh mpl forwarding 
+Fri Jan 29 21:13:20.238 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24000  24003       mLDP/IR: 0x00001   Gi0/0/0/2    10.0.102.10     0           
+24001  Pop         10.10.10.10/32     Gi0/0/0/2    10.0.102.10     4684        
+24002  Pop         10.0.101.0/24      Gi0/0/0/2    10.0.102.10     0           
+24003  Pop         10.0.103.0/24      Gi0/0/0/2    10.0.102.10     0           
+24004  24001       3.3.3.3/32         Gi0/0/0/2    10.0.102.10     4475        
+24005  Aggregate   A: Per-VRF Aggr[V] A                            83040       
+24006  24002       1.1.1.1/32         Gi0/0/0/2    10.0.102.10     496800
+```
+{% endtab %}
+
+{% tab title="PE3" %}
+```
+RP/0/0/CPU0:PE3#sh mpl forwarding 
+Fri Jan 29 21:14:19.354 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24000  Unlabelled  mLDP/IR: 0x00001
+24001  24000       2.2.2.2/32         Gi0/0/0/3    10.0.103.10     46750       
+24002  Pop         10.10.10.10/32     Gi0/0/0/3    10.0.103.10     5216        
+24003  Pop         10.0.101.0/24      Gi0/0/0/3    10.0.103.10     0           
+24004  Pop         10.0.102.0/24      Gi0/0/0/3    10.0.103.10     0           
+24005  24002       1.1.1.1/32         Gi0/0/0/3    10.0.103.10     5217        
+24006  Unlabelled  mLDP/IR: 0x00002
+24007  Unlabelled  192.168.0.3/32[V]  Gi0/0/0/0    192.168.3.2     0           
+24008  Aggregate   A: Per-VRF Aggr[V] A                            0           
+24009  Unlabelled  192.168.101.3/32[V]   \
+                                      Gi0/0/0/0    192.168.3.2     0
+```
+{% endtab %}
+{% endtabs %}
+
+Data-plane from ingress PE2
+
+{% tabs %}
+{% tab title="PE2" %}
+```text
+RP/0/0/CPU0:PE2#sh mpl mldp database 
+Fri Jan 29 21:28:50.384 UTC
+mLDP database
+LSM-ID: 0x00001  Type: P2MP  Uptime: 00:58:39
+  FEC Root           : 2.2.2.2 (we are the root)
+  Opaque decoded     : [global-id 1]
+  Upstream neighbor(s) :
+    None
+  Downstream  client(s): 
+    LDP 10.10.10.10:0  Uptime: 00:55:00
+      Next Hop         : 10.0.102.10
+      Interface        : GigabitEthernet0/0/0/2 
+      Remote label (D) : 24003             
+    PIM MDT            Uptime: 00:58:39
+      Egress intf     : LmdtA
+      Table ID        : IPv4: 0xe0000010 IPv6: 0xe0800010
+      HLI             : 0x00001
+      Ingress         : Yes
+      PPMP            : Yes
+      Local Label     : 24000 (internal)
+
+RP/0/0/CPU0:PE2#sh mpl forwarding labels 24000
+Fri Jan 29 21:31:04.805 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24000  24003       mLDP/IR: 0x00001   Gi0/0/0/2    10.0.102.10     0
+```
+{% endtab %}
+
+{% tab title="P" %}
+```
+RP/0/0/CPU0:P#sh mpl forwarding labels 24003
+Fri Jan 29 21:29:59.719 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24003  24006       mLDP/IR: 0x00001   Gi0/0/0/1    10.0.101.1      0           
+       24006       mLDP/IR: 0x00001   Gi0/0/0/3    10.0.103.3      0
+```
+{% endtab %}
+
+{% tab title="PE1" %}
+```
+RP/0/0/CPU0:PE1#sh mpl forwarding labels 24006
+Fri Jan 29 21:32:03.291 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24006  Unlabelled  mLDP/IR: 0x00002
+
+
+```
+{% endtab %}
+
+{% tab title="PE3" %}
+```
+RP/0/0/CPU0:PE3#sh mpl forwarding labels 24006
+Fri Jan 29 21:34:41.230 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24006  Unlabelled  mLDP/IR: 0x00002
+```
+{% endtab %}
+{% endtabs %}
+
 ### 3. No receivers, there's an active source
 
 Actually there's nothing interesting in this case. Ingress PE has no parties interested in receiving `232.1.1.1`. Thus it just drops incoming stream.
@@ -1245,6 +1918,10 @@ Paths: (2 available, best #2, table 555-VRF)
 ```
 {% endtab %}
 {% endtabs %}
+
+## Links
+
+{% embed url="https://tools.ietf.org/html/rfc6514" %}
 
 
 
