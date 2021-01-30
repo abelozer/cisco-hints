@@ -1657,7 +1657,7 @@ Label  Label       or ID              Interface                    Switched
 {% endtab %}
 {% endtabs %}
 
-Data-plane from ingress PE2
+Let's follow the data-plane for group 232.1.1.1 starting from ingress PE2 to P and lastly to PE1 and PE3. Most interesting output is from P. As you can see P router replicates traffic which arrives with label `24003` to both PE1 and PE3. That's the heart of mVPN MLDP data-plane behaviour.
 
 {% tabs %}
 {% tab title="PE2" %}
@@ -1728,6 +1728,20 @@ Label  Label       or ID              Interface                    Switched
 ```
 {% endtab %}
 {% endtabs %}
+
+Following output show what happens on P router when there's only one receiver behind PE1. CE3 is not requesting 232.1.1.1. So now P router does not replicate traffic ingressing the router with label `24003`.
+
+```text
+RP/0/0/CPU0:P#sh mpl forwarding 
+Sat Jan 30 17:50:55.090 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24000  Pop         2.2.2.2/32         Gi0/0/0/2    10.0.102.2      1400279     
+24001  Pop         3.3.3.3/32         Gi0/0/0/3    10.0.103.3      401639      
+24002  Pop         1.1.1.1/32         Gi0/0/0/1    10.0.101.1      402253      
+24003  24006       mLDP/IR: 0x00001   Gi0/0/0/1    10.0.101.1      0
+```
 
 ### 3. No receivers, there's an active source
 
