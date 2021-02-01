@@ -613,17 +613,23 @@ Reply to request 2 from 192.168.101.1, 14 ms
 
 In short it means that first hop routers \(CE1 and CE3\) receive IGMPv3 join where both source address and multicast group are specified. mVPN involves routes Type 1, 3 and 7 in this case.
 
-| Type | Name | Definition |
-| :--- | :--- | :--- |
-| Type 1 | Intra-AS I-PMSI A-D route |  |
-| Type 2 | Inter-AS I-PMSI A-D route |  |
-| Type 3 | S-PMSI A-D route |  |
-| Type 4 | Leaf A-D route |  |
-| Type 5 | Source Active A-D route |  |
-| Type 6 | Shared Tree Join route |  |
-| Type 7 | Source Tree Join route |  |
+
+
+**Route types**
+
+| Type | Name | Type | Definition |
+| :--- | :--- | :--- | :--- |
+| Type 1 | Intra-AS I-PMSI A-D route | AD |  |
+| Type 2 | Inter-AS I-PMSI A-D route | AD |  |
+| Type 3 | S-PMSI A-D route | AD |  |
+| Type 4 | Leaf A-D route | AD |  |
+| Type 5 | Source Active A-D route | AD |  |
+| Type 6 | Shared Tree Join route | C-multicast |  |
+| Type 7 | Source Tree Join route | C-multicast |  |
 
 ### 1. No receivers, no active sources
+
+All PEs are announcing Type 1 and Type 3.
 
 ```text
 RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn 
@@ -655,6 +661,54 @@ Route Distinguisher: 1.1.1.1:0 (default for vrf A)
                       3.3.3.3                       100      0 i
 
 Processed 6 prefixes, 6 paths
+```
+
+```text
+RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn [1][3.3.3.3]/40 detail 
+Mon Feb  1 08:19:15.073 UTC
+BGP routing table entry for [1][3.3.3.3]/40, Route Distinguisher: 1.1.1.1:0
+Versions:
+  Process           bRIB/RIB  SendTblVer
+  Speaker                 14          14
+    Flags: 0x00001001+0x00000000; 
+Last Modified: Jan 29 20:33:50.450 for 2d11h
+Paths: (1 available, best #1, not advertised to EBGP peer)
+  Not advertised to any peer
+  Path #1: Received by speaker 0
+  Flags: 0x4000000005060005, import: 0x80
+  Not advertised to any peer
+  Local
+    3.3.3.3 (metric 3) from 3.3.3.3 (3.3.3.3)
+      Origin IGP, localpref 100, valid, internal, best, group-best, import-candidate, imported
+      Received Path ID 0, Local Path ID 0, version 14
+      Community: no-export
+      Extended community: RT:1:1 
+      Source AFI: IPv4 MVPN, Source VRF: default, Source Route Distinguisher: 3.3.3.3:0
+```
+
+```text
+RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn [3][0][0.0.0.0][0][0.0.0.0][2.2.2.2]/12$
+Mon Feb  1 08:20:26.588 UTC
+BGP routing table entry for [3][0][0.0.0.0][0][0.0.0.0][2.2.2.2]/120, Route Distinguisher: 1.1.1.1:0
+Versions:
+  Process           bRIB/RIB  SendTblVer
+  Speaker                  8           8
+    Flags: 0x00001001+0x00000000; 
+Last Modified: Jan 29 20:33:50.450 for 2d11h
+Paths: (1 available, best #1, not advertised to EBGP peer)
+  Not advertised to any peer
+  Path #1: Received by speaker 0
+  Flags: 0x4000000005060005, import: 0x80
+  Not advertised to any peer
+  Local
+    2.2.2.2 (metric 3) from 2.2.2.2 (2.2.2.2)
+      Origin IGP, localpref 100, valid, internal, best, group-best, import-candidate, imported
+      Received Path ID 0, Local Path ID 0, version 8
+      Community: no-export
+      Extended community: RT:1:1 
+      PMSI: flags 0x00, type 2, label 0, ID 0x0600010402020202000701000400000001
+      PPMP: label 24000
+      Source AFI: IPv4 MVPN, Source VRF: default, Source Route Distinguisher: 2.2.2.2:0
 ```
 
 ### 2. Active receiver, no active sources
@@ -704,6 +758,8 @@ Reporter:
 {% endtabs %}
 
 #### PIM state on PE routers
+
+PE1 and PE3 have received PIM Joins from respective CE routers.
 
 {% tabs %}
 {% tab title="PE1" %}
