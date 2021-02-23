@@ -1947,7 +1947,7 @@ Processed 7 prefixes, 7 paths
 
 Several vendors depending on a software version are using pre-RFC encoding for `C-Mcast Import RT`. In this case you won't find a correct extended community in VPNv4 updates. Instead there will be community which Cisco interprets as L2VPN AGI.
 
-#### Wrong encoding
+### Nokia: wrong extended community encoding
 
 Below you can find CLI to switch to RFC encoding.
 
@@ -1978,16 +1978,147 @@ Paths: (2 available, best #2, table 555-VRF)
 {% tabs %}
 {% tab title="Nokia" %}
 ```text
-
-```
-{% endtab %}
-
-{% tab title="Juniper" %}
-```
-
+config>router>bgp# mvpn-vrf-import-subtype-new
 ```
 {% endtab %}
 {% endtabs %}
+
+![A screenshot from Nokia&apos;s documentation](../.gitbook/assets/nokia-screenshot.png)
+
+### Juniper: mVPN Wildcard Type 3 wrong encoding
+
+[RFC6625](https://tools.ietf.org/html/rfc6625) defines a new zero-length source and group addresses for mVPN Type 3 BGP Update.
+
+```text
+   This document specifies that a "zero-length" source
+   or group represents the corresponding wildcard.  Specifically,
+
+      - A source wildcard is encoded as a zero-length source field.
+        That is, the "multicast source length" field contains the value
+        0x00, and the "multicast source" field is omitted.
+      - A group wildcard is encoded as a zero-length group field.  That
+        is, the "multicast group length" field contains the value 0x00,
+        and the "multicast group" field is omitted.
+```
+
+#### Direct iBGP between two Cisco NCS5500
+
+172.16.1.44 \(NCS5500\) originates mVPN Type 3 and advertises it directly to 172.16.1.44 \(NCS5500\).
+
+Raw BGP message:
+
+```text
+ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+00 73 02 00 00 00 5c 90 0e 00 19 00 01 05 04 ac
+10 01 2c 00 03 0e 00 00 00 01 00 00 04 93 00 00
+ac 10 01 2c 40 01 01 00 40 02 00 40 05 04 00 00
+00 64 c0 08 04 ff ff ff 01 c0 10 08 00 02 00 01
+00 00 00 75 c0 16 16 00 02 00 00 00 06 00 01 04
+ac 10 01 2c 00 07 01 00 04 00 00 00 02 c0 46 03
+05 df d1
+```
+
+Decoded message:
+
+```text
+MP_REACH_NLRI
+0x900e001900010504AC10012C00030E00000001000004930000AC10012C
+
+ATTRIBUTE FLAG:        0x90
+ATTRIBUTE FLAG binary:    10010000
+    Bit 0, the Optional bit, is 1 so this is an optional attribute
+    Bit 1, the Transitive bit, is 0 so this is a non-transitive attribute
+    Bit 2, the Partial bit, is not set
+    Bit 3, the Extended Length Bit, is 1 so the length field is 2 bytes
+    The lower-order four bits of the Attribute Flag are unused and are set to 0000
+
+ATTRIBUTE TYPE:        0x0E    - 14 
+ATTRIBUTE LENGTH:    0x0019    - 25 bytes
+ATTRIBUTE CONTENT:    0x00010504AC10012C00030E00000001000004930000AC10012C
+
+    AFI:        1 (0x0001)
+    Sub AFI:    5 (0x05)
+    NEXTHOP Length:    4 (0x04) bytes
+    NEXTHOP:    172.16.1.44
+    Numb of SNPAs:    0 (0x00)
+
+    Route type:     3    (0x03) - S-PMSI A-D route
+    NLRI Length:     14 bytes    (0x0E)
+    RD: 1:1171 (0x0000 - 0x0001:0x00000493)
+    Multicast Source Length = 0 (0x00)
+    Multicast Source Address = 
+    Multicast Group Length = 0 (0x00)
+    Multicast Group Address = 
+    Originating Router IP Address = 172.16.1.44
+```
+
+#### iBGP with Juniper RR
+
+172.16.1.44 \(NCS5500\) originates mVPN Type 3 and advertises it to a route-reflector 172.16.1.41 \(Juniper\). RR then reflects the route to 172.16.1.43 \(NCS5500\).
+
+Raw BGP message:
+
+```text
+FF FF FF FF  FF FF FF FF  FF FF FF FF  FF FF FF FF  
+00 89 02 00  00 00 72 40  01 01 00 40  02 00 40 05  
+04 00 00 00  64 C0 08 04  FF FF FF 01  C0 10 08 00  
+02 00 01 00  00 00 75 80  09 04 AC 10  01 2C 80 0A  
+04 AC 10 01  29 C0 16 16  00 02 00 00  00 06 00 01  
+04 AC 10 01  2C 00 07 01  00 04 00 00  00 02 E0 46  
+03 05 DF D1  90 0E 00 21  00 01 05 04  AC 10 01 2C  
+00 03 16 00  00 00 01 00  00 04 93 00  00 00 00 00  
+00 00 00 00  00 AC 10 01  2C
+```
+
+Decoded message:
+
+```text
+MP_REACH_NLRI
+0x900e002100010504AC10012C000316000000010000049300000000000000000000AC10012C
+
+ATTRIBUTE FLAG:        0x90
+ATTRIBUTE FLAG binary:    10010000
+    Bit 0, the Optional bit, is 1 so this is an optional attribute
+    Bit 1, the Transitive bit, is 0 so this is a non-transitive attribute
+    Bit 2, the Partial bit, is not set
+    Bit 3, the Extended Length Bit, is 1 so the length field is 2 bytes
+    The lower-order four bits of the Attribute Flag are unused and are set to 0000
+
+ATTRIBUTE TYPE:        0x0E    - 14 
+ATTRIBUTE LENGTH:    0x0021    - 33 bytes
+ATTRIBUTE CONTENT:    0x00010504AC10012C000316000000010000049300000000000000000000AC10012C
+
+    AFI:        1 (0x0001)
+    Sub AFI:    5 (0x05)
+    NEXTHOP Length:    4 (0x04) bytes
+    NEXTHOP:    172.16.1.44
+    Numb of SNPAs:    0 (0x00)
+
+    Route type:     3    (0x03) - S-PMSI A-D route
+    NLRI Length:     22 bytes    (0x16)
+    RD: 1:1171 (0x0000 - 0x0001:0x00000493)
+    Multicast Source Length = 0 (0x00)
+    Multicast Source Address = 
+    Multicast Group Length = 0 (0x00)
+    Multicast Group Address = 
+    Originating Router IP Address = 0.0.0.0
+    Route type:     0    (0x00) - Unknown
+    NLRI Length:     0 bytes    (0x00)
+    ERROR: NLRI length is 0
+    ERROR: data is 0000AC10012C
+```
+
+#### Key findings
+
+1. Juniper RR receives the correct mVPN Type 3 Wildcard update with `Multicast Source Length` and `Multicast Group Length` set to `0x00`. `Multicast Source Address` and `Multicast Group Address` are omitted.
+2. Juniper reflects a modified update with `Multicast Source Address` and `Multicast Group Address` fields set to `0.0.0.0`.
+3. To reflect the changed NRLI length Juniper adjusts the `ATTRIBUTE LENGTH` and `NLRI Length` fields accordingly.
+4. NCS5500 receives the corrupted update and reads it based on RFC6625 encoding.
+
+```yaml
+Cisco:   0x900e001900010504AC10012C00030E00000001000004930000                AC10012C
+Juniper: 0x900e002100010504AC10012C000316000000010000049300000000000000000000AC10012C
+```
 
 ## Links
 
