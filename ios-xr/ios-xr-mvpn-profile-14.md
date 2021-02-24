@@ -1985,6 +1985,29 @@ config>router>bgp# mvpn-vrf-import-subtype-new
 
 ![A screenshot from Nokia&apos;s documentation](../.gitbook/assets/nokia-screenshot.png)
 
+After you apply it the encoding for extended community looks like the one below:
+
+```yaml
+DRP/0/3/CPU0:meltdown-drp#show bgp vpnv4 unicast vrf one 10.2.2.0/24
+BGP routing table entry for 10.2.2.0/24, Route Distinguisher: 1:2
+Versions:
+  Process           bRIB/RIB  SendTblVer
+  Speaker                128         128
+    Local Label: 16000
+Last Modified: May  5 08:37:28.075 for 03:52:19
+Paths: (1 available, best #1)
+  Advertised to peers (in unique update groups):
+    10.1.100.7      
+  Path #1: Received by speaker 0
+  Advertised to peers (in unique update groups):
+    10.1.100.7      
+  Local
+    0.0.0.0 from 0.0.0.0 (10.1.100.2)
+      Origin incomplete, metric 0, localpref 100, weight 32768, valid, redistributed, best, group-best, import-candidate
+      Received Path ID 0, Local Path ID 1, version 128
+      Extended community: VRF Route Import:10.1.100.2:2 Source AS:1:0 RT:1:1
+```
+
 ### Juniper: mVPN Wildcard Type 3 wrong encoding
 
 [RFC6625](https://tools.ietf.org/html/rfc6625) defines a new zero-length source and group addresses for mVPN Type 3 BGP Update.
