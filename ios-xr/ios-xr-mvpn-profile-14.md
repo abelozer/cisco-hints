@@ -2143,6 +2143,12 @@ Cisco:   0x900e001900010504AC10012C00030E00000001000004930000                AC1
 Juniper: 0x900e002100010504AC10012C000316000000010000049300000000000000000000AC10012C
 ```
 
+#### Workaround on Juniper
+
+```text
+set routing-options multicast omit-wildcard-address
+```
+
 ## Links
 
 {% embed url="https://tools.ietf.org/html/rfc6514" %}
