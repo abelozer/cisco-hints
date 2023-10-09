@@ -22,6 +22,7 @@ router isis {{ ISIS_PROCESS | default("1") }}
   mpls traffic-eng {{ ISIS_LEVEL | default("level-2-only") }}
   mpls traffic-eng router-id {{ RID_IFACE | default("Loopback0") }}
   segment-routing mpls
+{% raw %}
 {%- if MICROLOOP_AVOIDANCE %}
   microloop avoidance segment-routing
 {%- endif %}
@@ -45,47 +46,74 @@ router isis {{ ISIS_PROCESS | default("1") }}
 {%-   endif %}
  !
 {%- endfor %}
+{% endraw %}
 !
 mpls traffic-eng
 ```
 {% endtab %}
+
 {% tab title="OSPF" %}
 ```Django
 segment-routing global-block {{ SRGB_START | default("16000") }} {{ SRGB_END | default("23999") }}
 !
 router ospf {{ OSPF_PROCESS | default("1") }}
  segment-routing mpls
-{% if MAPPING_SERVER %}
+
+<div data-gb-custom-block data-tag="if">
+
  segment-routing prefix-sid-map advertise-local
-{% endif %}
-{% if MICROLOOP_AVOIDANCE %}
+
+</div>
+
+<div data-gb-custom-block data-tag="if">
+
  microloop avoidance segment-routing
-{% endif %}
-{% if MICROLOOP_AVOIDANCE_DELAY %}
+
+</div>
+
+<div data-gb-custom-block data-tag="if">
+
  microloop avoidance rib-update-delay {{ MICROLOOP_AVOIDANCE_DELAY }}
-{% endif %}
-{% if TI_LFA_PROCESS %}
+
+</div>
+
+<div data-gb-custom-block data-tag="if">
+
  fast-reroute per-prefix
  fast-reroute per-prefix ti-lfa
-{% endif %}
+
+</div>
+
  area 0
- {% if TI_LFA_AREA0 %}
+ 
+
+<div data-gb-custom-block data-tag="if" data-0='0' data-1='0' data-2='0' data-3='0' data-4='0' data-5='0' data-6='0' data-7='0' data-8='0' data-9='0' data-10='0' data-11='0'>
+
   fast-reroute per-prefix
   fast-reroute per-prefix ti-lfa
- {% endif %}
+ 
+
+</div>
+
   mpls traffic-eng
   !
   interface {{ RID_IFACE | default("Loopback0") }}
    prefix-sid index {{ INDEX }}
   !
-{% for IFACE in NNI %}
-{%   if IFACE.TI_LFA %}
+
+<div data-gb-custom-block data-tag="for">
+
+<div data-gb-custom-block data-tag="if">
+
   interface {{ IFACE.NAME }}
    fast-reroute per-prefix
    fast-reroute per-prefix ti-lfa
   !
-{%   endif %}
-{% endfor %}
+
+</div>
+
+</div>
+
  !
  mpls traffic-eng router-id {{ RID_IFACE | default("Loopback0") }}
 !
@@ -113,7 +141,7 @@ NNI:
 
 ## Notes
 
-MPLS traffic engineering functionality is required on SR node. The node advertises the traffic engineering link attributes in IGP which populate the traffic engineering database \(TED\) on the head-end. The SR-TE head-end requires the TED to calculate and validate the path of the SR-TE policy.
+MPLS traffic engineering functionality is required on SR node. The node advertises the traffic engineering link attributes in IGP which populate the traffic engineering database (TED) on the head-end. The SR-TE head-end requires the TED to calculate and validate the path of the SR-TE policy.
 
 ## Links
 
@@ -122,4 +150,3 @@ MPLS traffic engineering functionality is required on SR node. The node advertis
 ## Todo
 
 * [ ] Add flexalgo support to the templates
-
