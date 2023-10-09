@@ -49,7 +49,6 @@ router isis {{ ISIS_PROCESS | default("1") }}
 mpls traffic-eng
 ```
 {% endtab %}
-
 {% tab title="OSPF" %}
 ```Django
 segment-routing global-block {{ SRGB_START | default("16000") }} {{ SRGB_END | default("23999") }}
