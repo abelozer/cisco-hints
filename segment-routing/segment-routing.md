@@ -13,10 +13,8 @@ A default SRGB for IOS XR is 16000 – 23999.
 {% tabs %}
 {% tab title="ISIS" %}
 ```erlang
-{% if SRGB_START and SRGB_END %}
-segment-routing global-block {{ SRGB_START }} {{ SRGB_END }}
+segment-routing global-block {{ SRGB_START | default("16000") }} {{ SRGB_END | default("23999") }}
 !
-{% endif %}
 router isis {{ ISIS_PROCESS | default("1") }}
  address-family ipv4 unicast
   router-id {{ RID_IFACE | default("Loopback0") }}
@@ -54,10 +52,8 @@ mpls traffic-eng
 
 {% tab title="OSPF" %}
 ```erlang
-{% if SRGB_START and SRGB_END %}
-segment-routing global-block {{ SRGB_START }} {{ SRGB_END }}
+segment-routing global-block {{ SRGB_START | default("16000") }} {{ SRGB_END | default("23999") }}
 !
-{% endif %}
 router ospf {{ OSPF_PROCESS | default("1") }}
  segment-routing mpls
 {% if MAPPING_SERVER %}
