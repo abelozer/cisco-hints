@@ -12,7 +12,7 @@ A default SRGB for IOS XR is 16000 – 23999.
 
 {% tabs %}
 {% tab title="ISIS" %}
-```erlang
+```jinja
 segment-routing global-block {{ SRGB_START | default("16000") }} {{ SRGB_END | default("23999") }}
 !
 router isis {{ ISIS_PROCESS | default("1") }}
@@ -51,7 +51,7 @@ mpls traffic-eng
 {% endtab %}
 
 {% tab title="OSPF" %}
-```erlang
+```jinja
 segment-routing global-block {{ SRGB_START | default("16000") }} {{ SRGB_END | default("23999") }}
 !
 router ospf {{ OSPF_PROCESS | default("1") }}
