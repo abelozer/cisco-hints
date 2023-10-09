@@ -50,7 +50,7 @@ mpls traffic-eng
 ```
 {% endtab %}
 
-{% tab title="OSPF" %}
+ title="OSPF" %}
 ```erlang
 segment-routing global-block {{ SRGB_START | default("16000") }} {{ SRGB_END | default("23999") }}
 !
