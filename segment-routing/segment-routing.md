@@ -22,29 +22,29 @@ router isis {{ ISIS_PROCESS | default("1") }}
   mpls traffic-eng {{ ISIS_LEVEL | default("level-2-only") }}
   mpls traffic-eng router-id {{ RID_IFACE | default("Loopback0") }}
   segment-routing mpls
-{% if MICROLOOP_AVOIDANCE %}
+{%- if MICROLOOP_AVOIDANCE %}
   microloop avoidance segment-routing
-{% endif %}
-{% if MICROLOOP_AVOIDANCE_DELAY %}
+{%- endif %}
+{%- if MICROLOOP_AVOIDANCE_DELAY %}
   microloop avoidance rib-update-delay {{ MICROLOOP_AVOIDANCE_DELAY }}
-{% endif %}
-{% if MAPPING_SERVER %}
+{%- endif %}
+{%- if MAPPING_SERVER %}
   segment-routing prefix-sid-map advertise-local
-{% endif %}
+{%- endif %}
  !
  interface {{ RID_IFACE | default("Loopback0") }}
   address-family ipv4 unicast
    prefix-sid index {{ INDEX }}
  !
-{% for IFACE in NNI %}
+{%- for IFACE in NNI %}
  interface {{ IFACE.NAME }}
-{%   if TI_LFA %}
+{%-   if TI_LFA %}
   address-family ipv4 unicast
    fast-reroute per-prefix
    fast-reroute per-prefix ti-lfa
-{%   endif %}
+{%-   endif %}
  !
-{% endfor %}
+{%- endfor %}
 !
 mpls traffic-eng
 ```
