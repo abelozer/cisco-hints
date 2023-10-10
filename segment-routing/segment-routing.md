@@ -16,7 +16,7 @@ A default SRGB for IOS XR is 16000 – 23999.
 
 {% tabs %}
 {% tab title="ISIS" %}
-```Django
+```django
 segment-routing global-block {{ SRGB_START | default("16000") }} {{ SRGB_END | default("23999") }}
 !
 router isis {{ ISIS_PROCESS | default("1") }}
