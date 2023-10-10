@@ -4,6 +4,10 @@ description: SR IGP templates for IOS XR
 
 # IGP Configuration Template
 
+{% hint style="danger" %}
+The following template was originally designed for IOS XR 7.1.x.
+{% endhint %}
+
 ## Jinja2 IGP SR Template
 
 {% hint style="info" %}
