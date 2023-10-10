@@ -24,7 +24,7 @@ RP configuration is required for ASM case only.
 
 {% tabs %}
 {% tab title="Egress PE1" %}
-```aspnet
+```
 hostname PE1
 !
 vrf A
@@ -153,7 +153,7 @@ end
 {% endtab %}
 
 {% tab title="Ingress PE2" %}
-```text
+```
 hostname PE2
 !
 vrf A
@@ -466,7 +466,7 @@ end
 
 {% tabs %}
 {% tab title="Receiver/CE1" %}
-```text
+```
 hostname CE1
 !
 interface Loopback0
@@ -574,7 +574,7 @@ end
 
 {% tabs %}
 {% tab title="CE2" %}
-```bash
+```applescript
 CE2#ping 232.1.1.1 source 192.168.2.2 repeat 20
 Type escape sequence to abort.
 Sending 20, 100-byte ICMP Echos to 232.1.1.1, timeout is 2 seconds:
@@ -594,7 +594,7 @@ Reply to request 3 from 192.168.0.1, 13 ms
 
 {% tabs %}
 {% tab title="CE2" %}
-```bash
+```applescript
 CE2#ping 239.1.1.2 repeat 3
 Type escape sequence to abort.
 Sending 3, 100-byte ICMP Echos to 239.1.1.2, timeout is 2 seconds:
@@ -611,27 +611,27 @@ Reply to request 2 from 192.168.101.1, 14 ms
 
 ## PE-CE used SSM
 
-In short it means that first hop routers \(CE1 and CE3\) receive IGMPv3 join where both source address and multicast group are specified. mVPN involves routes Type 1, 3 and 7 in this case.
+In short it means that first hop routers (CE1 and CE3) receive IGMPv3 join where both source address and multicast group are specified. mVPN involves routes Type 1, 3 and 7 in this case.
 
 
 
 **Route types**
 
-| Type | Name | Type | Definition |
-| :--- | :--- | :--- | :--- |
-| Type 1 | Intra-AS I-PMSI A-D route | AD |  |
-| Type 2 | Inter-AS I-PMSI A-D route | AD |  |
-| Type 3 | S-PMSI A-D route | AD |  |
-| Type 4 | Leaf A-D route | AD |  |
-| Type 5 | Source Active A-D route | AD |  |
-| Type 6 | Shared Tree Join route | C-multicast |  |
-| Type 7 | Source Tree Join route | C-multicast |  |
+| Type   | Name                      | Type        | Definition |
+| ------ | ------------------------- | ----------- | ---------- |
+| Type 1 | Intra-AS I-PMSI A-D route | AD          |            |
+| Type 2 | Inter-AS I-PMSI A-D route | AD          |            |
+| Type 3 | S-PMSI A-D route          | AD          |            |
+| Type 4 | Leaf A-D route            | AD          |            |
+| Type 5 | Source Active A-D route   | AD          |            |
+| Type 6 | Shared Tree Join route    | C-multicast |            |
+| Type 7 | Source Tree Join route    | C-multicast |            |
 
 ### 1. No receivers, no active sources
 
 All PEs are announcing Type 1 and Type 3.
 
-```text
+```applescript
 RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn 
 Fri Jan 29 10:16:00.261 UTC
 BGP VRF A, state: Active
@@ -663,7 +663,7 @@ Route Distinguisher: 1.1.1.1:0 (default for vrf A)
 Processed 6 prefixes, 6 paths
 ```
 
-```text
+```applescript
 RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn [1][3.3.3.3]/40 detail 
 Mon Feb  1 08:19:15.073 UTC
 BGP routing table entry for [1][3.3.3.3]/40, Route Distinguisher: 1.1.1.1:0
@@ -686,7 +686,7 @@ Paths: (1 available, best #1, not advertised to EBGP peer)
       Source AFI: IPv4 MVPN, Source VRF: default, Source Route Distinguisher: 3.3.3.3:0
 ```
 
-```text
+```applescript
 RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn [3][0][0.0.0.0][0][0.0.0.0][2.2.2.2]/12$
 Mon Feb  1 08:20:26.588 UTC
 BGP routing table entry for [3][0][0.0.0.0][0][0.0.0.0][2.2.2.2]/120, Route Distinguisher: 1.1.1.1:0
@@ -713,13 +713,13 @@ Paths: (1 available, best #1, not advertised to EBGP peer)
 
 ### 2. Active receiver, no active sources
 
-When egress PEs receive PIM Join  \(C-S, C-G\) they generate Type 7 to express the presence of receiver behind. As you can see from PE2 output \(ingress PE\) it gets Type 7 routes from both egress PEs.
+When egress PEs receive PIM Join  (C-S, C-G) they generate Type 7 to express the presence of receiver behind. As you can see from PE2 output (ingress PE) it gets Type 7 routes from both egress PEs.
 
 #### IGMP state on CE routers
 
 {% tabs %}
 {% tab title="CE1" %}
-```text
+```applescript
 CE1#sh ip igmp membership 232.1.1.1
 Flags: A  - aggregate, T - tracked
        L  - Local, S - static, V - virtual, R - Reported through v3 
@@ -738,7 +738,7 @@ Reporter:
 {% endtab %}
 
 {% tab title="CE3" %}
-```
+```applescript
 CE3#sh ip igmp membership 232.1.1.1
 Flags: A  - aggregate, T - tracked
        L  - Local, S - static, V - virtual, R - Reported through v3 
@@ -763,7 +763,7 @@ PE1 and PE3 have received PIM Joins from respective CE routers.
 
 {% tabs %}
 {% tab title="PE1" %}
-```text
+```applescript
 RP/0/0/CPU0:PE1#sh pim vrf A topology 232.1.1.1
 Fri Jan 29 13:55:41.748 UTC
 
@@ -793,7 +793,7 @@ JP: Join(BGP) RPF: LmdtA,2.2.2.2 Flags:
 {% endtab %}
 
 {% tab title="PE2" %}
-```
+```applescript
 RP/0/0/CPU0:PE2#sh pim vrf A topology 232.1.1.1
 Fri Jan 29 13:56:09.387 UTC
 
@@ -823,7 +823,7 @@ JP: Join(now) RPF: GigabitEthernet0/0/0/0,192.168.2.2* Flags:
 {% endtab %}
 
 {% tab title="PE3" %}
-```
+```applescript
 RP/0/0/CPU0:PE3#sh pim vrf A topology 232.1.1.1
 Fri Jan 29 13:56:43.895 UTC
 
@@ -857,7 +857,7 @@ JP: Join(BGP) RPF: LmdtA,2.2.2.2 Flags:
 
 {% tabs %}
 {% tab title="PE1" %}
-```text
+```
 RP/0/0/CPU0:PE1#sh mrib vrf A route 232.1.1.1
 Fri Jan 29 13:40:47.140 UTC
 
@@ -954,7 +954,7 @@ Interface flags: F - Forward, A - Accept, IC - Internal Copy,
 
 {% tabs %}
 {% tab title="PE1" %}
-```text
+```
 RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn 
 Fri Jan 29 10:17:27.055 UTC
 BGP VRF A, state: Active
@@ -1065,7 +1065,7 @@ Processed 7 prefixes, 7 paths
 
 #### Type 7 in more details
 
-```text
+```
 RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn [7][2.2.2.2:0][1][32][192.168.2.2][32][$
 Fri Jan 29 14:49:13.348 UTC
 BGP routing table entry for [7][2.2.2.2:0][1][32][192.168.2.2][32][232.1.1.1]/184, Route Distinguisher: 1.1.1.1:0
@@ -1088,7 +1088,7 @@ Paths: (1 available, best #1)
 
 Let's look at IPv4 unicast route:. There's an extended community called `VRF Route Import` with the value `2.2.2.2:16`.
 
-```text
+```
 RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 unicast 192.168.2.0/24
 Fri Jan 29 14:50:55.851 UTC
 BGP routing table entry for 192.168.2.0/24, Route Distinguisher: 1.1.1.1:0
@@ -1116,7 +1116,7 @@ Paths: (1 available, best #1)
 
 {% tabs %}
 {% tab title="PE1" %}
-```text
+```
 RP/0/0/CPU0:PE1#sh mpl mldp database brief   
 Fri Jan 29 20:39:59.845 UTC
 
@@ -1406,7 +1406,7 @@ LSM-ID: 0x00001  Type: P2MP  Uptime: 00:42:12
 
 {% tabs %}
 {% tab title="PE1" %}
-```text
+```
 RP/0/0/CPU0:PE1#show mpls mldp bindings 
 Fri Jan 29 20:49:35.925 UTC
 mLDP MPLS Bindings database
@@ -1469,7 +1469,7 @@ LSP-ID: 0x00001 Paths: 3 Flags:
 
 {% tabs %}
 {% tab title="PE1" %}
-```text
+```
 RP/0/0/CPU0:PE1#show mpls mldp lsm-id
 Fri Jan 29 20:52:13.344 UTC
 mLDP database
@@ -1585,7 +1585,7 @@ LSM-ID: 0x00001  VRF: default  Type: P2MP  Uptime: 00:41:00
 {% endtab %}
 {% endtabs %}
 
-```text
+```
 RP/0/0/CPU0:PE2#sh mrib vrf A route 232.1.1.1 192.168.2.2 detail 
 Fri Jan 29 21:08:04.149 UTC
 
@@ -1639,7 +1639,7 @@ LSM-ID: 0x00001  Type: P2MP  Uptime: 00:38:24
 
 {% tabs %}
 {% tab title="PE1" %}
-```text
+```
 RP/0/0/CPU0:PE1#sh mpl forwarding 
 Fri Jan 29 21:11:56.563 UTC
 Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
@@ -1717,7 +1717,7 @@ Let's follow the data-plane for group 232.1.1.1 starting from ingress PE2 to P a
 
 {% tabs %}
 {% tab title="PE2" %}
-```text
+```
 RP/0/0/CPU0:PE2#sh mpl mldp database 
 Fri Jan 29 21:28:50.384 UTC
 mLDP database
@@ -1787,7 +1787,7 @@ Label  Label       or ID              Interface                    Switched
 
 Following output show what happens on P router when there's only one receiver behind PE1. CE3 is not requesting 232.1.1.1. So now P router does not replicate traffic ingressing the router with label `24003`.
 
-```text
+```
 RP/0/0/CPU0:P#sh mpl forwarding 
 Sat Jan 30 17:50:55.090 UTC
 Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
@@ -1806,15 +1806,14 @@ Actually there's nothing interesting in this case. Ingress PE has no parties int
 * [ ] Check CLI
 * [ ] Get a bit deeper.
 
-```text
-
+```
 ```
 
 ### 4. Active receivers and active source
 
 {% tabs %}
 {% tab title="PE1" %}
-```text
+```
 RP/0/0/CPU0:PE1#sh bgp vrf A ipv4 mvpn 
 Fri Jan 29 14:06:21.965 UTC
 BGP VRF A, state: Active
@@ -1927,20 +1926,17 @@ Processed 7 prefixes, 7 paths
 
 ### No receivers, no active sources
 
-```text
-
+```
 ```
 
 ### Active receiver, no active sources
 
-```text
-
+```
 ```
 
 ### No receivers, there's an active source
 
-```text
-
+```
 ```
 
 ## mVPN interoperability issues
@@ -1951,7 +1947,7 @@ Several vendors depending on a software version are using pre-RFC encoding for `
 
 Below you can find CLI to switch to RFC encoding.
 
-```text
+```
 BGP routing table entry for 555:95863000:10.90.5.128/26, version 24415
 Paths: (2 available, best #2, table 555-VRF)
   Not advertised to any peer
@@ -1977,13 +1973,13 @@ Paths: (2 available, best #2, table 555-VRF)
 
 {% tabs %}
 {% tab title="Nokia" %}
-```text
+```
 config>router>bgp# mvpn-vrf-import-subtype-new
 ```
 {% endtab %}
 {% endtabs %}
 
-![A screenshot from Nokia&apos;s documentation](../.gitbook/assets/nokia-screenshot.png)
+![A screenshot from Nokia's documentation](../.gitbook/assets/nokia-screenshot.png)
 
 After you apply it the encoding for extended community looks like the one below:
 
@@ -2012,7 +2008,7 @@ Paths: (1 available, best #1)
 
 [RFC6625](https://tools.ietf.org/html/rfc6625) defines a new zero-length source and group addresses for mVPN Type 3 BGP Update.
 
-```text
+```
    This document specifies that a "zero-length" source
    or group represents the corresponding wildcard.  Specifically,
 
@@ -2026,11 +2022,11 @@ Paths: (1 available, best #1)
 
 #### Direct iBGP between two Cisco NCS5500
 
-172.16.1.44 \(NCS5500\) originates mVPN Type 3 and advertises it directly to 172.16.1.44 \(NCS5500\).
+172.16.1.44 (NCS5500) originates mVPN Type 3 and advertises it directly to 172.16.1.44 (NCS5500).
 
 Raw BGP message:
 
-```text
+```
 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
 00 73 02 00 00 00 5c 90 0e 00 19 00 01 05 04 ac
 10 01 2c 00 03 0e 00 00 00 01 00 00 04 93 00 00
@@ -2043,7 +2039,7 @@ ac 10 01 2c 00 07 01 00 04 00 00 00 02 c0 46 03
 
 Decoded message:
 
-```text
+```
 MP_REACH_NLRI
 0x900e001900010504AC10012C00030E00000001000004930000AC10012C
 
@@ -2077,11 +2073,11 @@ ATTRIBUTE CONTENT:    0x00010504AC10012C00030E00000001000004930000AC10012C
 
 #### iBGP with Juniper RR
 
-172.16.1.44 \(NCS5500\) originates mVPN Type 3 and advertises it to a route-reflector 172.16.1.41 \(Juniper\). RR then reflects the route to 172.16.1.43 \(NCS5500\).
+172.16.1.44 (NCS5500) originates mVPN Type 3 and advertises it to a route-reflector 172.16.1.41 (Juniper). RR then reflects the route to 172.16.1.43 (NCS5500).
 
 Raw BGP message:
 
-```text
+```
 FF FF FF FF  FF FF FF FF  FF FF FF FF  FF FF FF FF  
 00 89 02 00  00 00 72 40  01 01 00 40  02 00 40 05  
 04 00 00 00  64 C0 08 04  FF FF FF 01  C0 10 08 00  
@@ -2095,7 +2091,7 @@ FF FF FF FF  FF FF FF FF  FF FF FF FF  FF FF FF FF
 
 Decoded message:
 
-```text
+```
 MP_REACH_NLRI
 0x900e002100010504AC10012C000316000000010000049300000000000000000000AC10012C
 
@@ -2145,13 +2141,11 @@ Juniper: 0x900e002100010504AC10012C000316000000010000049300000000000000000000AC1
 
 #### Workaround on Juniper
 
-```text
+```
 set routing-options multicast omit-wildcard-address
 ```
 
 ## Links
 
 {% embed url="https://tools.ietf.org/html/rfc6514" %}
-
-
 
